@@ -1,5 +1,6 @@
 import fs from 'node:fs'
-export const getCommands = async () => {
+import { Command } from '../types'
+export const getCommands = async (): Promise<Command[]> => {
     ;(global as any).fs = fs
     ;(global as any).__dirname = __dirname
     return Promise.all(
