@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import { getCommands } from './commands'
+import database from './db/db'
 
 const { TOKEN } = process.env
 
@@ -19,6 +20,7 @@ const client = new Client({
 const rest = new REST({ version: '9' }).setToken(TOKEN!)
 
 const main = async () => {
+    await database.initalize()
     const commands = await getCommands()
     const commandNames = commands.map(s => s.name)
     client.on('ready', async () => {
