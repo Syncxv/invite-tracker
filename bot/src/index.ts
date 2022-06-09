@@ -6,6 +6,7 @@ dotenv.config()
 
 import { getCommands } from './commands'
 import database from './db/db'
+import { UserClass } from './db/models/User'
 
 const { TOKEN } = process.env
 
@@ -44,7 +45,17 @@ const main = async () => {
             console.log(invites)
         }
     })
-
+    client.on('messageCreate', async message => {
+        if (message.guild) {
+            const usr = await UserClass.getUser(
+                message.author.id,
+                message.guild.id
+            )
+            console.log(usr)
+            const what = `guilds.${message.guild.id}.messages`
+            await usr.updateOne({ $inc: { [what]: 1 } })
+        }
+    })
     client.login(TOKEN!)
 }
 
