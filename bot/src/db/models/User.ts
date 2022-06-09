@@ -43,6 +43,17 @@ export class UserClass {
         }
         return bro
     }
+
+    public static async incrementAttr(
+        userId: string,
+        guildId: string,
+        attribute: keyof Bruh,
+        amount = 1
+    ) {
+        const usr = await this.getUser(userId, guildId)
+        const what = `guilds.${guildId}.${attribute}`
+        await usr.updateOne({ $inc: { [what]: amount } })
+    }
 }
 
 export const UserModel = getModelForClass(UserClass)

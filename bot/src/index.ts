@@ -10,7 +10,7 @@ import { UserClass } from './db/models/User'
 
 const { TOKEN } = process.env
 
-const client = new Client({
+export const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,
@@ -47,13 +47,11 @@ const main = async () => {
     })
     client.on('messageCreate', async message => {
         if (message.guild) {
-            const usr = await UserClass.getUser(
+            await UserClass.incrementAttr(
                 message.author.id,
-                message.guild.id
+                message.guild.id,
+                'messages'
             )
-            console.log(usr)
-            const what = `guilds.${message.guild.id}.messages`
-            await usr.updateOne({ $inc: { [what]: 1 } })
         }
     })
     client.login(TOKEN!)
