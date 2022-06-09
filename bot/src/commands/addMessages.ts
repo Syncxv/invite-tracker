@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
 import { client } from '..'
+import { Colors, Images } from '../constants'
 import { UserModel } from '../db/models/User'
 import { Command } from '../types'
 
@@ -35,11 +36,10 @@ const AddMessages: Command = {
                         text: 'Invite Tracker',
                         iconURL: client.user!.avatarURL()!
                     },
-                    color: '#04d275',
+                    color: Colors.success,
                     author: {
                         name: 'Success',
-                        iconURL:
-                            'https://cdn.discordapp.com/attachments/766372306192695401/984432589769150474/iconmonstr-check-mark-1-240.png'
+                        iconURL: Images.successIcon
                     },
                     description: `You successfully added \`${
                         amountData.value
