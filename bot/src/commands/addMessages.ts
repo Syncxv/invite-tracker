@@ -1,8 +1,7 @@
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
-import { client } from '..'
-import { Colors, Images } from '../constants'
 import { UserModel } from '../db/models/User'
 import { Command } from '../types'
+import { createEmbed } from '../utils/createEmbed'
 
 const AddMessages: Command = {
     name: 'addmessages',
@@ -31,20 +30,13 @@ const AddMessages: Command = {
         )
         interaction.reply({
             embeds: [
-                {
-                    footer: {
-                        text: 'Invite Tracker',
-                        iconURL: client.user!.avatarURL()!
-                    },
-                    color: Colors.success,
-                    author: {
-                        name: 'Success',
-                        iconURL: Images.successIcon
-                    },
+                createEmbed({
+                    type: 'success',
+                    timestamp: new Date(),
                     description: `You successfully added \`${
                         amountData.value
                     }\` messages to <@${userData.user!.id}>.`
-                }
+                })
             ]
         })
     }
