@@ -14,5 +14,7 @@ export const Colors: ColorsInterface = {
 
 export const Images = {
     successIcon:
-        'https://cdn.discordapp.com/attachments/766372306192695401/984432589769150474/iconmonstr-check-mark-1-240.png'
+        'https://cdn.discordapp.com/attachments/766372306192695401/984432589769150474/iconmonstr-check-mark-1-240.png',
+    errorIcon:
+        'https://cdn.discordapp.com/attachments/766372306192695401/984447143555244062/iconmonstr-x-mark-lined-240.png'
 }
