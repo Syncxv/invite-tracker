@@ -1,7 +1,8 @@
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
-import { Client, Guild, Intents } from 'discord.js'
+import { Client, Intents } from 'discord.js'
 import dotenv from 'dotenv'
+import inviteManager from './classes/inviteManager'
 dotenv.config()
 
 import { getCommands } from './commands'
@@ -14,7 +15,8 @@ export const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_INVITES
+        Intents.FLAGS.GUILD_INVITES,
+        Intents.FLAGS.GUILD_MEMBERS
     ]
 })
 
@@ -26,6 +28,7 @@ const main = async () => {
     const commandNames = commands.map(s => s.name)
     client.on('ready', async () => {
         console.log(`Logged in as ${client.user!.tag}!`)
+        await inviteManager.initalize(client)
         await rest.put(Routes.applicationCommands(client.user!.id), {
             body: commands
         })
@@ -39,12 +42,7 @@ const main = async () => {
         }
     })
 
-    client.on('inviteCreate', async ({ guild }) => {
-        if (guild instanceof Guild) {
-            const invites = await guild?.invites?.fetch()
-            console.log(invites)
-        }
-    })
+    client.on('inviteCreate', inviteManager.onInviteCreate)
     client.on('messageCreate', async message => {
         if (message.guild) {
             await UserClass.incrementAttr(
@@ -54,6 +52,8 @@ const main = async () => {
             )
         }
     })
+
+    client.on('guildMemberAdd', inviteManager.onGuildMemberAdd)
     client.login(TOKEN!)
 }
 
