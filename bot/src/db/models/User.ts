@@ -15,33 +15,38 @@ export class UserClass {
         [guildId: string]: Bruh
     }
 
+    public static async createUser(
+        userId: string,
+        guildId: string
+    ): Promise<MongoDocument<UserClass>> {
+        const user = new UserModel({
+            userId,
+            guilds: {
+                [guildId]: {
+                    messages: 0,
+                    invites: 0
+                }
+            }
+        })
+        await user.save()
+        return user
+    }
+
     public static async getUser(
         userId: string,
         guildId: string
     ): Promise<MongoDocument<UserClass>> {
-        const bro = await UserModel.findOne({ userId })
-        if (bro == null) {
-            const wat = new UserModel({
-                userId,
-                guilds: {
-                    [guildId]: {
-                        messages: 0,
-                        invites: 0
-                    }
-                }
-            })
-            await wat.save()
-            return wat
-        }
-        const pls = bro.guilds[guildId]
-        if (!pls) {
-            bro.guilds[guildId] = {
+        const user = await UserModel.findOne({ userId })
+        if (user == null) return await this.createUser(userId, guildId)
+        const guild = user.guilds[guildId]
+        if (!guild) {
+            user.guilds[guildId] = {
                 messages: 0,
                 invites: 0
             }
-            await bro.save()
+            await user.save()
         }
-        return bro
+        return user
     }
 
     public static async incrementAttr(
@@ -51,8 +56,9 @@ export class UserClass {
         amount = 1
     ) {
         const usr = await this.getUser(userId, guildId)
-        const what = `guilds.${guildId}.${attribute}`
-        await usr.updateOne({ $inc: { [what]: amount } })
+        await usr.updateOne({
+            $inc: { [`guilds.${guildId}.${attribute}`]: amount }
+        })
     }
 }
 
