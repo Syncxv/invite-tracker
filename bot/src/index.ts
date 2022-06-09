@@ -42,7 +42,6 @@ const main = async () => {
         }
     })
 
-    client.on('inviteCreate', inviteManager.onInviteCreate)
     client.on('messageCreate', async message => {
         if (message.guild) {
             await UserClass.incrementAttr(
@@ -53,6 +52,8 @@ const main = async () => {
         }
     })
 
+    client.on('inviteCreate', inviteManager.onInviteCreate)
+    client.on('inviteDelete', inviteManager.onInviteRemove)
     client.on('guildMemberAdd', inviteManager.onGuildMemberAdd)
     client.login(TOKEN!)
 }

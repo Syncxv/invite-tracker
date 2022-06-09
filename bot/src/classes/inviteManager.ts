@@ -1,51 +1,67 @@
 import { Client, Collection, Guild, GuildMember, Invite } from 'discord.js'
-import { client } from '..'
-//https://anidiots.guide/coding-guides/tracking-used-invites/
-//THIS GOES SO HARD
+type GuildId = string
 export class InviteManager {
-    guildInvites: Map<string, Collection<string, number | null>> = new Map()
+    invites: Collection<GuildId, Collection<string, SimpleInvite>> =
+        new Collection()
 
     constructor() {
         this.onGuildMemberAdd = this.onGuildMemberAdd.bind(this)
         this.onInviteCreate = this.onInviteCreate.bind(this)
+        this.onInviteRemove = this.onInviteRemove.bind(this)
     }
 
     async initalize(client: Client) {
         client.guilds.cache.forEach(async guild => {
             const firstInvites = await guild.invites.fetch()
-            this.guildInvites.set(
+            this.invites.set(
                 guild.id,
                 new Collection(
-                    firstInvites.map(invite => [invite.code, invite.uses])
+                    firstInvites.map(invite => [
+                        invite.code,
+                        new SimpleInvite(invite)
+                    ])
                 )
             )
         })
     }
 
     async onGuildMemberAdd(member: GuildMember) {
+        const cachedInvites = this.invites.get(member.guild.id)!
         const newInvites = await member.guild.invites.fetch()
-        const oldInvites = this.guildInvites.get(member.guild.id)!
-        const invite = newInvites.find(
-            i =>
-                typeof i.uses === 'number' &&
-                i.uses > (oldInvites.get(i.code) || 99999)
-        )!
-        const inviter = await client.users.fetch(invite.inviter!.id)
-        inviter
-            ? console.log(
-                  `${member.user.tag} joined using invite code ${invite.code} from ${inviter.tag}. Invite was used ${invite.uses} times since its creation.`
-              )
-            : console.log(
-                  `${member.user.tag} joined but I couldn't find through which invite.`
-              )
+        console.log(cachedInvites, newInvites, member)
+        try {
+            const usedInvite = newInvites.find(
+                inv =>
+                    typeof inv.uses === 'number' &&
+                    inv.uses >
+                        (cachedInvites.get(inv!.code)?.uses || Number.MAX_VALUE)
+            )
+            console.log(usedInvite + ' INVITE WAS USED :O')
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     async onInviteCreate(invite: Invite) {
-        this.guildInvites
-            .get((invite.guild as Guild).id)
-            ?.set(invite.code, invite.uses!)
+        this.invites
+            .get((invite.guild as Guild).id)!
+            .set(invite.code, new SimpleInvite(invite))
+    }
+    async onInviteRemove(invite: Invite) {
+        this.invites.get((invite.guild as Guild).id)!.delete(invite.code)
     }
 }
 
 const inviteManager = ((global as any).inviteManager = new InviteManager())
 export default inviteManager
+
+class SimpleInvite {
+    uses: number
+    code: string
+    userId: string
+    constructor(invite: Invite) {
+        this.code = invite.code
+        this.uses = invite.uses!
+        this.userId = invite.inviterId!
+    }
+}
