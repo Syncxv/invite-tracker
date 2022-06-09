@@ -1,9 +1,10 @@
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
-import { Client, Intents } from 'discord.js'
+import { Client, Guild, Intents } from 'discord.js'
 import dotenv from 'dotenv'
-import { getCommands } from './commands'
 dotenv.config()
+
+import { getCommands } from './commands'
 
 const { TOKEN } = process.env
 
@@ -34,6 +35,14 @@ const main = async () => {
             }
         }
     })
+
+    client.on('inviteCreate', async ({ guild }) => {
+        if (guild instanceof Guild) {
+            const invites = await guild?.invites?.fetch()
+            console.log(invites)
+        }
+    })
+
     client.login(TOKEN!)
 }
 
