@@ -3,7 +3,7 @@ import { client } from '..'
 import { Colors, Images } from '../constants'
 
 type createEmbedArgs = {
-    type: 'success' | 'error' | 'custom'
+    type: 'success' | 'error' | 'brand'
 } & MessageEmbedOptions
 
 export const createEmbed = ({ type, ...props }: createEmbedArgs) => {
@@ -37,6 +37,16 @@ export const createEmbed = ({ type, ...props }: createEmbedArgs) => {
                     iconURL: Images.errorIcon,
                     ...props.author
                 }
+            }
+        case 'brand':
+            return {
+                ...props,
+                footer: {
+                    text: 'Invite Tracker',
+                    iconURL: client.user!.avatarURL()!,
+                    ...props.footer
+                },
+                color: Colors.brandColor
             }
         default:
             return {
