@@ -1,6 +1,5 @@
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
 import { Command } from '../../types'
-import tryCatchExecute from '../../utils/tryCatch'
 import { inviteLeaderBoards } from './inviteLeaderboards'
 import { invitesWigga } from './invites'
 
@@ -32,9 +31,9 @@ const Invite: Command = {
         const [command] = interaction.options.data
         switch (command.name) {
             case 'leaderboard':
-                return await tryCatchExecute(inviteLeaderBoards)(interaction)
+                return await inviteLeaderBoards(interaction)
             case 'invites':
-                return tryCatchExecute(invitesWigga)(interaction)
+                return invitesWigga(interaction)
             default:
                 interaction.reply('WAHT')
         }

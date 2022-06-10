@@ -8,6 +8,7 @@ dotenv.config()
 import { getCommands } from './commands'
 import database from './db/db'
 import { UserClass } from './db/models/User'
+import tryCatchExecute from './utils/tryCatch'
 
 const { TOKEN } = process.env
 
@@ -37,7 +38,7 @@ const main = async () => {
         if (interaction.isCommand()) {
             const index = commandNames.indexOf(interaction.commandName)
             if (index != -1) {
-                commands[index].execute(interaction)
+                tryCatchExecute(commands[index].execute)(interaction)
             }
         }
     })
