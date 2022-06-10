@@ -29,9 +29,9 @@ const main = async () => {
     client.on('ready', async () => {
         console.log(`Logged in as ${client.user!.tag}!`)
         await inviteManager.initalize(client)
-        await rest.put(Routes.applicationCommands(client.user!.id), {
+        rest.put(Routes.applicationCommands(client.user!.id), {
             body: commands
-        })
+        }).catch(err => console.error(err))
     })
     client.on('interactionCreate', async interaction => {
         if (interaction.isCommand()) {
