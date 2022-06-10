@@ -1,4 +1,11 @@
-import { Client, Collection, Guild, GuildMember, Invite } from 'discord.js'
+import {
+    Client,
+    Collection,
+    Guild,
+    GuildMember,
+    Invite,
+    PartialGuildMember
+} from 'discord.js'
 import { UserClass } from '../db/models/User'
 type GuildId = string
 export class InviteManager {
@@ -7,6 +14,7 @@ export class InviteManager {
 
     constructor() {
         this.onGuildMemberAdd = this.onGuildMemberAdd.bind(this)
+        this.onGuildMemberRemove = this.onGuildMemberRemove.bind(this)
         this.onInviteCreate = this.onInviteCreate.bind(this)
         this.onInviteRemove = this.onInviteRemove.bind(this)
     }
@@ -45,11 +53,22 @@ export class InviteManager {
                 usedInvite!.guild!.id,
                 'joins'
             )
+            await UserClass.setInviter(member.id, member.guild.id, inviter)
         } catch (err) {
             console.error(err)
         }
     }
-
+    async onGuildMemberRemove(member: GuildMember | PartialGuildMember) {
+        const leaver = await UserClass.getUser(member.id, member.guild.id)
+        const guildData = leaver.guilds[member.guild.id]
+        if (!guildData) return
+        if (!guildData.inviter) return
+        await UserClass.incrementInvite(
+            guildData.inviter,
+            member.guild.id,
+            'leaves'
+        )
+    }
     async onInviteCreate(invite: Invite) {
         this.invites
             .get((invite.guild as Guild).id)!

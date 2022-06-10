@@ -11,6 +11,7 @@ type InvitesBruh = {
 interface Bruh {
     invites: InvitesBruh
     messages: number
+    inviter?: string
 }
 
 export class UserClass {
@@ -86,6 +87,16 @@ export class UserClass {
         const usr = await this.getUser(userId, guildId)
         await usr.updateOne({
             $inc: { [`guilds.${guildId}.invites.${attribute}`]: amount }
+        })
+    }
+    public static async setInviter(
+        inviteeId: string,
+        guildId: string,
+        inviterId: string
+    ) {
+        const usr = await this.getUser(inviteeId, guildId)
+        await usr.updateOne({
+            $set: { [`guilds.${guildId}.inviter`]: inviterId }
         })
     }
 }

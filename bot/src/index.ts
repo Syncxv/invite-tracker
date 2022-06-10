@@ -55,6 +55,7 @@ const main = async () => {
     client.on('inviteCreate', inviteManager.onInviteCreate)
     client.on('inviteDelete', inviteManager.onInviteRemove)
     client.on('guildMemberAdd', inviteManager.onGuildMemberAdd)
+    client.on('guildMemberRemove', inviteManager.onGuildMemberRemove)
     client.login(TOKEN!)
 }
 
