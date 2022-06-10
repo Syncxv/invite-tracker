@@ -1,4 +1,5 @@
 import { Client, Collection, Guild, GuildMember, Invite } from 'discord.js'
+import { UserClass } from '../db/models/User'
 type GuildId = string
 export class InviteManager {
     invites: Collection<GuildId, Collection<string, SimpleInvite>> =
@@ -12,7 +13,7 @@ export class InviteManager {
 
     async initalize(client: Client) {
         client.guilds.cache.forEach(async guild => {
-            const firstInvites = await guild.invites.fetch()
+            const firstInvites = await guild.invites.fetch({ cache: false })
             this.invites.set(
                 guild.id,
                 new Collection(
@@ -27,7 +28,7 @@ export class InviteManager {
 
     async onGuildMemberAdd(member: GuildMember) {
         const cachedInvites = this.invites.get(member.guild.id)!
-        const newInvites = await member.guild.invites.fetch()
+        const newInvites = await member.guild.invites.fetch({ cache: false })
         console.log(cachedInvites, newInvites, member)
         try {
             const usedInvite = newInvites.find(
@@ -36,7 +37,14 @@ export class InviteManager {
                     inv.uses >
                         (cachedInvites.get(inv!.code)?.uses || Number.MAX_VALUE)
             )
-            console.log(usedInvite + ' INVITE WAS USED :O')
+            console.log(usedInvite, ' INVITE WAS USED :O')
+            const inviter = usedInvite!.inviterId
+            if (!inviter) return
+            await UserClass.incrementInvite(
+                inviter,
+                usedInvite!.guild!.id,
+                'joins'
+            )
         } catch (err) {
             console.error(err)
         }

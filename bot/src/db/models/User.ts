@@ -1,8 +1,15 @@
 import { getModelForClass, prop } from '@typegoose/typegoose'
 import { MongoDocument } from '../../types'
 
+type InvitesBruh = {
+    joins: number
+    leaves: number
+    fake: number
+    bonus: number
+}
+
 interface Bruh {
-    invites: number
+    invites: InvitesBruh
     messages: number
 }
 
@@ -24,7 +31,12 @@ export class UserClass {
             guilds: {
                 [guildId]: {
                     messages: 0,
-                    invites: 0
+                    invites: {
+                        joins: 0,
+                        leaves: 0,
+                        fake: 0,
+                        bonus: 0
+                    }
                 }
             }
         })
@@ -42,7 +54,12 @@ export class UserClass {
         if (!guild) {
             user.guilds[guildId] = {
                 messages: 0,
-                invites: 0
+                invites: {
+                    joins: 0,
+                    leaves: 0,
+                    fake: 0,
+                    bonus: 0
+                }
             }
             await user.save()
         }
@@ -58,6 +75,17 @@ export class UserClass {
         const usr = await this.getUser(userId, guildId)
         await usr.updateOne({
             $inc: { [`guilds.${guildId}.${attribute}`]: amount }
+        })
+    }
+    public static async incrementInvite(
+        userId: string,
+        guildId: string,
+        attribute: keyof InvitesBruh,
+        amount = 1
+    ) {
+        const usr = await this.getUser(userId, guildId)
+        await usr.updateOne({
+            $inc: { [`guilds.${guildId}.invites.${attribute}`]: amount }
         })
     }
 }
