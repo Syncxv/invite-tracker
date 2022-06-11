@@ -1,6 +1,6 @@
 import { GuildMember } from 'discord.js'
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
-import { UserClass } from '../../db/models/User'
+import { InvitesBruh, UserClass } from '../../db/models/User'
 import { MongoDocument, SubCommand } from '../../types'
 import { createEmbed } from '../../utils/createEmbed'
 
@@ -66,16 +66,15 @@ export const getInvitesFormated: IOverload = async (
     if (typeof userId === 'string') {
         const user = await UserClass.getUser(userId, guildId)
         const { invites } = user.guilds[guildId]
-        return `${prefix} **${invites.joins - invites.leaves}** (**${
-            invites.joins
-        }** regular, **${invites.leaves}** left, **${invites.fake}** fake, **${
-            invites.bonus
-        }** bonus)`
+        return formatInvites(invites, prefix)
     }
     const { invites } = userId.guilds[guildId]
-    return `${prefix} **${invites.joins - invites.leaves}** (**${
+    return formatInvites(invites, prefix)
+}
+
+const formatInvites = (invites: InvitesBruh, prefix: string) =>
+    `${prefix} **${invites.joins - invites.leaves}** invites (**${
         invites.joins
     }** regular, **${invites.leaves}** left, **${invites.fake}** fake, **${
         invites.bonus
     }** bonus)`
-}

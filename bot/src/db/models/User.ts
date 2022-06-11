@@ -1,14 +1,14 @@
 import { getModelForClass, prop } from '@typegoose/typegoose'
 import { MongoDocument } from '../../types'
 
-type InvitesBruh = {
+export type InvitesBruh = {
     joins: number
     leaves: number
     fake: number
     bonus: number
 }
 
-interface Bruh {
+export interface Bruh {
     invites: InvitesBruh
     messages: number
     inviter?: string
