@@ -1,7 +1,8 @@
 import { Command, SubCommand } from '../../types'
+import inviteIncrements from './inviteIncrement'
 import inviteLeaderBoards from './inviteLeaderboards'
 import invitesWigga from './invites'
-const options = [invitesWigga, inviteLeaderBoards]
+const options = [invitesWigga, inviteLeaderBoards, ...inviteIncrements]
 
 const subCommands: { [x: string]: SubCommand } = options.reduce(
     (obj, subCommand) => ({ ...obj, [subCommand.name]: subCommand }),
