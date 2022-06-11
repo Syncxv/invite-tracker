@@ -1,4 +1,4 @@
-const scopes = ['guilds', 'guilds.members.read', 'identify', 'applications.commands'].join(' ')
+const scopes = ['guilds', 'guilds.members.read', 'identify'].join(' ')
 
 const AUTH_LINK = `https://discord.com/api/oauth2/authorize?client_id=${
     process.env.NEXT_PUBLIC_CLIENT_ID
