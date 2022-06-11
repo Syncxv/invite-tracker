@@ -19,5 +19,5 @@ export type MongoDocument<T> = Document<string, BeAnObject, any> &
     }
 export type SubCommand = ApplicationCommandOptionData & {
     execute: (interaction: CommandInteraction) => Promise<any>
-    options: ApplicationCommandOptionData[]
+    options?: ApplicationCommandOptionData[]
 }
