@@ -1,41 +1,54 @@
-import { CacheType, CommandInteraction, GuildMember } from 'discord.js'
+import { GuildMember } from 'discord.js'
+import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
 import { UserClass } from '../../db/models/User'
-import { MongoDocument } from '../../types'
+import { MongoDocument, SubCommand } from '../../types'
 import { createEmbed } from '../../utils/createEmbed'
 
-export const invitesWigga = async (
-    interaction: CommandInteraction<CacheType>
-) => {
-    const [userData] = interaction.options.data[0].options!
-    if (!userData)
+const InvitesWigga: SubCommand = {
+    type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    name: 'count',
+    description: 'see how many invites someone or yourself has :)',
+    options: [
+        {
+            name: 'user',
+            description: 'see invites for this a user',
+            type: ApplicationCommandOptionTypes.USER,
+            required: false
+        }
+    ],
+    execute: async interaction => {
+        const [userData] = interaction.options.data[0].options!
+        if (!userData)
+            return interaction.reply({
+                embeds: [
+                    createEmbed({
+                        type: 'brand',
+                        title: interaction.user.tag,
+                        description: await getInvitesFormated(
+                            (interaction.member as GuildMember).user.id,
+                            interaction.guildId!,
+                            'You currently have'
+                        )
+                    })
+                ]
+            })
         return interaction.reply({
             embeds: [
                 createEmbed({
                     type: 'brand',
-                    title: interaction.user.tag,
+                    title: userData.user!.tag,
                     description: await getInvitesFormated(
-                        (interaction.member as GuildMember).user.id,
+                        userData.user!.id,
                         interaction.guildId!,
-                        'You currently have'
+                        `<@${userData.user!.id}> currently has`
                     )
                 })
             ]
         })
-    return interaction.reply({
-        embeds: [
-            createEmbed({
-                type: 'brand',
-                title: userData.user!.tag,
-                description: await getInvitesFormated(
-                    userData.user!.id,
-                    interaction.guildId!,
-                    `<@${userData.user!.id}> currently has`
-                )
-            })
-        ]
-    })
+    }
 }
 
+export default InvitesWigga
 type IOverload = {
     (
         user: MongoDocument<UserClass>,

@@ -1,42 +1,21 @@
-import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
-import { Command } from '../../types'
-import { inviteLeaderBoards } from './inviteLeaderboards'
-import { invitesWigga } from './invites'
+import { Command, SubCommand } from '../../types'
+import inviteLeaderBoards from './inviteLeaderboards'
+import invitesWigga from './invites'
+const options = [invitesWigga, inviteLeaderBoards]
+
+const subCommands: { [x: string]: SubCommand } = options.reduce(
+    (obj, subCommand) => ({ ...obj, [subCommand.name]: subCommand }),
+    {}
+)
 
 const Invite: Command = {
     name: 'invite',
     description: 'bruh',
-    options: [
-        {
-            type: ApplicationCommandOptionTypes.SUB_COMMAND,
-            name: 'leaderboard',
-            description: 'shows who has the most invites and sheet'
-        },
-        {
-            type: ApplicationCommandOptionTypes.SUB_COMMAND,
-            name: 'invites',
-            options: [
-                {
-                    name: 'user',
-                    description: 'see invites for this a user',
-                    type: ApplicationCommandOptionTypes.USER,
-                    required: false
-                }
-            ],
-            description: 'see how many invites a user has'
-        }
-    ],
+    options,
     execute: async interaction => {
         console.log(interaction)
         const [command] = interaction.options.data
-        switch (command.name) {
-            case 'leaderboard':
-                return await inviteLeaderBoards(interaction)
-            case 'invites':
-                return invitesWigga(interaction)
-            default:
-                interaction.reply('WAHT')
-        }
+        subCommands[command.name].execute(interaction)
     }
 }
 
