@@ -1,10 +1,11 @@
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
-import { UserModel } from '../db/models/User'
-import { Command } from '../types'
-import { createEmbed } from '../utils/createEmbed'
+import { UserModel } from '../../db/models/User'
+import { SubCommand } from '../../types'
+import { createEmbed } from '../../utils/createEmbed'
 
-const AddMessages: Command = {
-    name: 'addmessages',
+const AddMessages: SubCommand = {
+    type: ApplicationCommandOptionTypes.SUB_COMMAND,
+    name: 'add',
     description: 'adds messages to specified user',
     options: [
         {
@@ -21,7 +22,8 @@ const AddMessages: Command = {
         }
     ],
     execute: async interaction => {
-        const [userData, amountData] = interaction.options.data
+        const [command] = interaction.options.data
+        const [userData, amountData] = command.options!
         await UserModel.incrementAttr(
             userData.user!.id,
             interaction.guildId!,

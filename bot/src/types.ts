@@ -2,7 +2,11 @@ import {
     BeAnObject,
     IObjectWithTypegooseFunction
 } from '@typegoose/typegoose/lib/types'
-import { ApplicationCommandData, CommandInteraction } from 'discord.js'
+import {
+    ApplicationCommandData,
+    ApplicationCommandOptionData,
+    CommandInteraction
+} from 'discord.js'
 import { Document } from 'mongoose'
 
 export type Command = ApplicationCommandData & {
@@ -13,3 +17,7 @@ export type MongoDocument<T> = Document<string, BeAnObject, any> &
     IObjectWithTypegooseFunction & {
         _id: string
     }
+export type SubCommand = ApplicationCommandOptionData & {
+    execute: (interaction: CommandInteraction) => Promise<any>
+    options: ApplicationCommandOptionData[]
+}
