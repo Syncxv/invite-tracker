@@ -1,8 +1,9 @@
 import { Command, SubCommand } from '../../types'
 import AddMessages from './addMessages'
 import MessageLeaderboards from './messageLeaderboards'
+import RemoveMessage from './removeMessage'
 
-const options = [AddMessages, MessageLeaderboards]
+const options = [AddMessages, MessageLeaderboards, RemoveMessage]
 
 const subCommands: { [x: string]: SubCommand } = options.reduce(
     (obj, subCommand) => ({ ...obj, [subCommand.name]: subCommand }),
