@@ -5,25 +5,10 @@ import { AUTH_LINK } from '../../../util/getAuthLink'
 import { Routes } from 'discord-api-types/v10'
 import { URLSearchParams } from 'url'
 import { JWT } from 'next-auth/jwt'
+import { refreshAccessToken } from '../../../util/refreshToken'
 
 export const rest = new REST({ version: '10' })
-const refreshToken = async (token: JWT) => {
-    console.log('REFRESHING TOKEN', token, 'REFRESH TOKEN: ', token.refreshToken)
-    rest.setToken(token.accessToken as string)
-    const what = await rest.post(Routes.oauth2TokenRevocation(), {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-            client_id: process.env.NEXT_PUBLIC_CLIENT_ID!,
-            client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET!,
-            grant_type: 'refresh_token',
-            refresh_token: token.refreshToken as string
-        })
-    })
-    console.log('RESPONSE:', what)
-    return {}
-}
+
 export default NextAuth({
     // Configure one or more authentication providers
     providers: [
@@ -51,7 +36,7 @@ export default NextAuth({
                 return token
             }
             console.log('TOKEN HAS EXIRED')
-            return refreshToken(token!)
+            return await refreshAccessToken(token)
         },
         async session({ session, user, token }) {
             console.log('IN SESSION CALLBACK', session, user, token)
