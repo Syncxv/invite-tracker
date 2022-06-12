@@ -1,10 +1,7 @@
 import { REST } from '@discordjs/rest'
-import NextAuth, { Account } from 'next-auth'
+import NextAuth from 'next-auth'
 import Discord from 'next-auth/providers/discord'
 import { AUTH_LINK } from '../../../util/getAuthLink'
-import { Routes } from 'discord-api-types/v10'
-import { URLSearchParams } from 'url'
-import { JWT } from 'next-auth/jwt'
 import { refreshAccessToken } from '../../../util/refreshToken'
 
 export const rest = new REST({ version: '10' })
