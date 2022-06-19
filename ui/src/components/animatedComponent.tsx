@@ -2,12 +2,11 @@ import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
 import { getRandomized, rawTransform } from '../util/textTransform'
 
-export const AnimatedText: React.FC<{ children: React.ReactNode; className: string }> = ({
+export const AnimatedComponent: React.FC<{ children: React.ReactNode; className?: string }> = ({
     children,
     className = ''
 }) => {
     const ref = useRef<HTMLDivElement | null>(null)
-    const timeline = useRef()
     useEffect(() => {
         gsap.set(ref.current!, {
             transform: getRandomized(200),
@@ -30,7 +29,7 @@ export const AnimatedText: React.FC<{ children: React.ReactNode; className: stri
     }, [ref])
     return (
         <div className={`perspective ${className}`}>
-            <p ref={ref}>{children}</p>
+            <div ref={ref}>{children}</div>
         </div>
     )
 }

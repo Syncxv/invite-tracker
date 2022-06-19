@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import Button from '../atoms/Button'
 
 export const LoginBtn = () => {
@@ -16,7 +16,11 @@ export const LoginBtn = () => {
             </div>
         )
     }
-    return <Button variant="brand">Login</Button>
+    return (
+        <Button variant="brand" onClick={() => signIn()}>
+            Login
+        </Button>
+    )
 }
 
 export const NavItem: React.FC<{ children: React.ReactNode }> = ({ children }) => {
