@@ -1,4 +1,5 @@
 import { useSession } from 'next-auth/react'
+import Button from '../atoms/Button'
 
 export const LoginBtn = () => {
     const { data: session } = useSession()
@@ -15,11 +16,11 @@ export const LoginBtn = () => {
             </div>
         )
     }
-    return <div>welp</div>
+    return <Button variant="brand">Login</Button>
 }
 
 export const NavItem: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return <li>{children}</li>
+    return <li className="hover:underline cursor-pointer">{children}</li>
 }
 
 export const NavBar = () => {
@@ -28,7 +29,7 @@ export const NavBar = () => {
             <div className="brand">
                 <img
                     className="w-24"
-                    src="https://media.discordapp.net/attachments/748017439496732702/987617431214247966/unknown.png"
+                    src="https://media.discordapp.net/attachments/748017439496732702/988160045088931890/inv_tracker_logo_white.png"
                     alt=""
                 />
             </div>
