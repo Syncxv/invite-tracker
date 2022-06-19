@@ -10,3 +10,37 @@ export const getRandomized = (y: number) =>
     )}, ${generateRandomNumber(0.8, 0.89)})`
 
 export const generateRandomNumber = (min: number, max: number) => Math.random() * (max - min) + min
+
+export const getGsapValues = ({
+    y,
+    opacity = 0,
+    element,
+    start = 'top bottom'
+}: {
+    y: number
+    opacity?: number
+    start?: string
+    element: HTMLElement
+}) => {
+    return {
+        element,
+        from: {
+            transform: getRandomized(y),
+            opacity,
+            willChange: 'transform'
+        },
+        to: {
+            scrollTrigger: {
+                trigger: element,
+                start
+            },
+            duration: 2.3,
+            stagger: 0.15,
+            ease: 'expo.out',
+            y: 0,
+            opacity: 1,
+            transform: 'translate(0px, 0px)',
+            willChange: 'auto'
+        }
+    }
+}
