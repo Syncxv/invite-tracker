@@ -1,3 +1,5 @@
+$bruhColor1: #ffc9d8;
+$bruhColor2: #ff7a7a;
 .lines {
     position: absolute;
     inset: 0;
@@ -22,7 +24,7 @@
             overflow: visible;
             fill: none;
             stroke-width: 2;
-            stroke: #c9e9ff;
+            stroke: $bruhColor1;
             width: 100%;
             height: 100%;
             stroke-dasharray: 2 10;
@@ -30,7 +32,7 @@
             opacity: 0;
 
             &:nth-child(1) {
-                stroke: #f8fcff;
+                stroke: $bruhColor2;
             }
             &:nth-child(2) {
                 stroke-width: 6px;

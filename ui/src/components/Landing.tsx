@@ -12,16 +12,17 @@ export const Landing: FunctionalComponent = ({}) => {
     const paragraphTextRef = useRef<HTMLParagraphElement | null>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
     useEffect(() => {
+        console.log(buttonRef)
         const paragraphValues = getGsapValues({ element: paragraphTextRef.current!, y: 200 })
         const h11 = getGsapValues({ element: heroH1Text.current!, y: 200 })
         const h12 = getGsapValues({ element: heroH1Text2.current!, y: 300 })
-        const buttonThing = getGsapValues({ element: buttonRef.current!, y: 400 })
+        const buttonThing = getGsapValues({ element: '#im-not-sorry', y: 400 })
         const tl = (timeline.current = gsap
             .timeline({ defaults: { duration: 2.3 } })
             .fromTo(h11.element, h11.from, h11.to)
             .fromTo(h12.element, h12.from, h12.to, '-=2.2')
             .fromTo(paragraphValues.element, paragraphValues.from, paragraphValues.to, '-=1.5')
-            .fromTo(buttonThing.element, buttonThing.from, buttonThing.to, '-=1.9'))
+            .fromTo('#im-not-sorry', buttonThing.from, buttonThing.to, '-=1.9'))
         return () => {
             tl.kill()
         }
@@ -40,7 +41,7 @@ export const Landing: FunctionalComponent = ({}) => {
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, sunt!
                 </p> */}
             </div>
-            <BorderButton ref={buttonRef} variant="brand" className="mt-6 text-2xl">
+            <BorderButton id="im-not-sorry" ref={buttonRef} variant="brand" className="mt-6 !text-2xl">
                 Dashboard
             </BorderButton>
         </main>

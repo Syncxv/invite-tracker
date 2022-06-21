@@ -1,8 +1,11 @@
-import { forwardRef, useRef, useState } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import Button, { ButtonProps } from '../Button'
-export const BorderButton = forwardRef<HTMLButtonElement, ButtonProps>(
+export const BorderButton = forwardRef<HTMLButtonElement | null, ButtonProps>(
     ({ children, isIcon, className = '', ...rest }, ref) => {
         const [isHovered, setHoverd] = useState(false)
+        const innerRef = useRef<HTMLButtonElement>(null)
+
+        useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement)
         return (
             <button
                 ref={ref}
@@ -20,27 +23,48 @@ export const BorderButton = forwardRef<HTMLButtonElement, ButtonProps>(
                 {children}
                 <div className={`lines ${isHovered && 'start'}`}>
                     <div className="bruh">
-                        <svg className="line" viewBox="0 0 139 48">
+                        <svg
+                            className="line"
+                            viewBox={`0 0 ${innerRef.current?.clientWidth} ${innerRef.current?.clientHeight}`}
+                        >
                             <rect x="0" y="0" width="100%" height="100%" rx="11" ry="11" pathLength="10"></rect>
                         </svg>
-                        <svg className="line" viewBox="0 0 139 48">
+                        <svg
+                            className="line"
+                            viewBox={`0 0 ${innerRef.current?.clientWidth} ${innerRef.current?.clientHeight}`}
+                        >
                             <rect x="0" y="0" width="100%" height="100%" rx="11" ry="11" pathLength="10"></rect>
                         </svg>
-                        <svg className="line" viewBox="0 0 139 48">
+                        <svg
+                            className="line"
+                            viewBox={`0 0 ${innerRef.current?.clientWidth} ${innerRef.current?.clientHeight}`}
+                        >
                             <rect x="0" y="0" width="100%" height="100%" rx="11" ry="11" pathLength="10"></rect>
                         </svg>
-                        <svg className="line" viewBox="0 0 139 48">
+                        <svg
+                            className="line"
+                            viewBox={`0 0 ${innerRef.current?.clientWidth} ${innerRef.current?.clientHeight}`}
+                        >
                             <rect x="0" y="0" width="100%" height="100%" rx="11" ry="11" pathLength="10"></rect>
                         </svg>
                     </div>
                     <div className="bruh">
-                        <svg className="line" viewBox="0 0 139 48">
+                        <svg
+                            className="line"
+                            viewBox={`0 0 ${innerRef.current?.clientWidth} ${innerRef.current?.clientHeight}`}
+                        >
                             <rect x="0" y="0" width="100%" height="100%" rx="11" ry="11" pathLength="10"></rect>
                         </svg>
-                        <svg className="line" viewBox="0 0 139 48">
+                        <svg
+                            className="line"
+                            viewBox={`0 0 ${innerRef.current?.clientWidth} ${innerRef.current?.clientHeight}`}
+                        >
                             <rect x="0" y="0" width="100%" height="100%" rx="11" ry="11" pathLength="10"></rect>
                         </svg>
-                        <svg className="line" viewBox="0 0 139 48">
+                        <svg
+                            className="line"
+                            viewBox={`0 0 ${innerRef.current?.clientWidth} ${innerRef.current?.clientHeight}`}
+                        >
                             <rect x="0" y="0" width="100%" height="100%" rx="11" ry="11" pathLength="10"></rect>
                         </svg>
                         <svg className="line" viewBox="0 0 139 48">

@@ -20,7 +20,7 @@ export const getGsapValues = ({
     y: number
     opacity?: number
     start?: string
-    element: HTMLElement
+    element: HTMLElement | string
 }) => {
     return {
         element,
@@ -31,7 +31,7 @@ export const getGsapValues = ({
         },
         to: {
             scrollTrigger: {
-                trigger: element,
+                trigger: typeof element === 'string' ? document.querySelector(element) : element,
                 start
             },
             duration: 2.3,
