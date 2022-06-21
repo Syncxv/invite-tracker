@@ -2,6 +2,7 @@ import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
 import { FunctionalComponent } from '../types/react'
 import { getGsapValues, getRandomized } from '../util/textTransform'
+import { BorderButton } from './atoms/BorderButton'
 import Button from './atoms/Button'
 
 export const Landing: FunctionalComponent = ({}) => {
@@ -29,19 +30,19 @@ export const Landing: FunctionalComponent = ({}) => {
     return (
         <main className="flex flex-col items-center h-screen mt-16">
             <div className="hero flex flex-col items-center  gap-6">
-                <h1 ref={heroH1Text} className="text-6xl font-bold">
+                <h1 ref={heroH1Text} className="text-9xl font-bold">
                     A Really
                 </h1>
-                <h1 ref={heroH1Text2} className="text-6xl font-bold">
+                <h1 ref={heroH1Text2} className="text-9xl font-bold">
                     Cool Bot
                 </h1>
                 {/* <p ref={paragraphTextRef} className="text-gray-300 w-1/2 text-center">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, sunt!
                 </p> */}
             </div>
-            <Button ref={buttonRef} variant="brand" className="mt-6">
+            <BorderButton ref={buttonRef} variant="brand" className="mt-6 text-2xl">
                 Dashboard
-            </Button>
+            </BorderButton>
         </main>
     )
 }
