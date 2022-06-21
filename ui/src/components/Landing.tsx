@@ -1,9 +1,8 @@
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
 import { FunctionalComponent } from '../types/react'
-import { getGsapValues, getRandomized } from '../util/textTransform'
+import { getGsapValues } from '../util/textTransform'
 import { BorderButton } from './atoms/BorderButton'
-import Button from './atoms/Button'
 
 export const Landing: FunctionalComponent = ({}) => {
     const timeline = useRef<gsap.core.Timeline | null>(null)

@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import Button, { ButtonProps } from '../Button'
+import { ButtonProps } from '../Button'
 export const BorderButton = forwardRef<HTMLButtonElement | null, ButtonProps>(
     ({ children, isIcon, className = '', ...rest }, ref) => {
         const [isHovered, setHoverd] = useState(false)

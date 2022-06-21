@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
-import { getRandomized, rawTransform } from '../util/textTransform'
+import { getRandomized } from '../util/textTransform'
 
 export const AnimatedComponent: React.FC<{ children: React.ReactNode; className?: string }> = ({
     children,
