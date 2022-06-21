@@ -40,7 +40,7 @@ export const Landing: FunctionalComponent = ({}) => {
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, sunt!
                 </p> */}
             </div>
-            <BorderButton id="im-not-sorry" ref={buttonRef} variant="brand" className="mt-6 !text-2xl">
+            <BorderButton id="im-not-sorry" ref={buttonRef} variant="brand" className="mt-9 !text-2xl">
                 Dashboard
             </BorderButton>
         </main>
