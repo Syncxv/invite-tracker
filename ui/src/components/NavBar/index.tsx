@@ -29,7 +29,7 @@ export const NavItem: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 export const NavBar = () => {
     return (
-        <nav className="flex justify-between items-center pl-2 pr-8 w-screen">
+        <nav className="flex justify-between items-center pl-2 pr-8">
             <div className="brand">
                 <img
                     className="w-24"
@@ -37,7 +37,7 @@ export const NavBar = () => {
                     alt=""
                 />
             </div>
-            <ul className="links flex gap-4">
+            <ul className="links flex items-center justify-center text-lg py-2 px-6 py gap-8 ">
                 <NavItem>Invite</NavItem>
                 <NavItem>Dashboard</NavItem>
                 <NavItem>Status</NavItem>
