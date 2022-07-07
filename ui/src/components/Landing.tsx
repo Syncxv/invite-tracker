@@ -1,4 +1,5 @@
 import gsap from 'gsap'
+import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import { FunctionalComponent } from '../types/react'
 import { getGsapValues } from '../util/textTransform'
@@ -10,6 +11,7 @@ export const Landing: FunctionalComponent = ({}) => {
     const heroH1Text2 = useRef<HTMLHeadingElement | null>(null)
     const paragraphTextRef = useRef<HTMLParagraphElement | null>(null)
     const buttonRef = useRef<HTMLButtonElement>(null)
+    const router = useRouter()
     useEffect(() => {
         console.log(buttonRef)
         const paragraphValues = getGsapValues({ element: paragraphTextRef.current!, y: 200 })
@@ -40,7 +42,13 @@ export const Landing: FunctionalComponent = ({}) => {
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, sunt!
                 </p> */}
             </div>
-            <BorderButton id="im-not-sorry" ref={buttonRef} variant="brand" className="mt-9 !text-2xl">
+            <BorderButton
+                onClick={() => router.push('/dashboard')}
+                id="im-not-sorry"
+                ref={buttonRef}
+                variant="brand"
+                className="mt-9 !text-2xl"
+            >
                 Dashboard
             </BorderButton>
         </main>

@@ -1,14 +1,13 @@
 import type { NextPage } from 'next'
 import { Landing } from '../components/Landing'
-import { NavBar } from '../components/NavBar'
+import Layout from '../components/Layout'
 
 const Home: NextPage = () => {
     // const { data } = useSession()
     return (
-        <div className="bg-primary-900 text-white h-screen min-h-screen ">
-            <NavBar />
+        <Layout>
             <Landing />
-        </div>
+        </Layout>
     )
 }
 
