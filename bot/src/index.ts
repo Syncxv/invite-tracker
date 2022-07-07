@@ -2,6 +2,7 @@ import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
 import { Client, Intents } from 'discord.js'
 import dotenv from 'dotenv'
+import { apiMain } from './api'
 import inviteManager from './classes/inviteManager'
 dotenv.config()
 
@@ -57,6 +58,8 @@ const main = async () => {
     client.on('inviteDelete', inviteManager.onInviteRemove)
     client.on('guildMemberAdd', inviteManager.onGuildMemberAdd)
     client.on('guildMemberRemove', inviteManager.onGuildMemberRemove)
+
+    apiMain()
     client.login(TOKEN!)
 }
 
