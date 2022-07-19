@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { client } from '../..'
 import * as guildController from '../controllers/guilds'
 import middleOfTheseNuts from '../middleware'
 
