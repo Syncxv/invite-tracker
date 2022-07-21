@@ -1,13 +1,11 @@
 import { Command, SubCommand } from '../../types'
+import { getSubCommands } from '../../utils/getSubCommands'
 import inviteIncrements from './inviteIncrement'
 import inviteLeaderBoards from './inviteLeaderboards'
 import invitesWigga from './invites'
 const options = [invitesWigga, inviteLeaderBoards, ...inviteIncrements]
 
-const subCommands: { [x: string]: SubCommand } = options.reduce(
-    (obj, subCommand) => ({ ...obj, [subCommand.name]: subCommand }),
-    {}
-)
+const subCommands: { [x: string]: SubCommand } = getSubCommands(options)
 
 const Invite: Command = {
     name: 'invite',
