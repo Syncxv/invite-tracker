@@ -1,4 +1,4 @@
-import { Command, SubCommand } from '../../types'
+import { Command } from '../../types'
 import { getSubCommands } from '../../utils/getSubCommands'
 import inviteIncrements from './inviteIncrement'
 import inviteLeaderBoards from './inviteLeaderboards'
