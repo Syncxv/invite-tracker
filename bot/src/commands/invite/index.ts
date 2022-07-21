@@ -5,7 +5,7 @@ import inviteLeaderBoards from './inviteLeaderboards'
 import invitesWigga from './invites'
 const options = [invitesWigga, inviteLeaderBoards, ...inviteIncrements]
 
-const subCommands: { [x: string]: SubCommand } = getSubCommands(options)
+const subCommands = getSubCommands(options)
 
 const Invite: Command = {
     name: 'invite',
