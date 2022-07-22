@@ -3,10 +3,10 @@ import { NavBar } from './NavBar'
 
 interface Props {}
 
-const Layout: FunctionalComponent = ({ children }) => {
+const Layout: FunctionalComponent<{ nav?: boolean }> = ({ children, nav = true }) => {
     return (
         <div className="bg-primary-900 text-white h-screen min-h-screen ">
-            <NavBar />
+            {nav && <NavBar />}
             {children}
         </div>
     )
