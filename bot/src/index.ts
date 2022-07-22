@@ -39,6 +39,7 @@ const main = async () => {
         if (interaction.isCommand()) {
             const index = commandNames.indexOf(interaction.commandName)
             if (index != -1) {
+                //TODO: i feel like you can use decorators for this but ill get to it later
                 tryCatchExecute(commands[index].execute)(interaction)
             }
         }

@@ -4,6 +4,7 @@ import botApi from '../../botApi'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Guild } from '../../types/discord'
+import { ServerCard } from '../../components/molecules/ServerCard'
 
 interface Props {}
 
@@ -19,10 +20,12 @@ const Dashboard: React.FC<Props> = () => {
     }, [])
     return (
         <Layout>
-            <div>Dashboard</div>
-            {servers.map(server => (
-                <h1>{server.name}</h1>
-            ))}
+            <h2 className="ml-32 text-bold text-2xl">Servers</h2>
+            <div className="grid justify-items-center grid-cols-auto-fit pt-8 px-32">
+                {servers.map(guild => (
+                    <ServerCard guild={guild} />
+                ))}
+            </div>
         </Layout>
     )
 }

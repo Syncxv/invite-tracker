@@ -1,6 +1,9 @@
 module.exports = {
     content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
     theme: {
+        gridTemplateColumns: {
+            'auto-fit': 'repeat(auto-fit, minmax(12rem, 1fr))'
+        },
         extend: {
             colors: {
                 'primary-900': '#02010A',
