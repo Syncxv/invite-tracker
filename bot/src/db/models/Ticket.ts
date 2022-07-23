@@ -1,4 +1,5 @@
-import { getModelForClass, prop } from '@typegoose/typegoose'
+import { prop } from '@typegoose/typegoose'
+import { TicketModel } from '.'
 import { UserClass } from './User'
 
 export type Status = 'open' | 'closed'
@@ -29,5 +30,3 @@ export class TicketClass {
         return ticket
     }
 }
-
-export const TicketModel = getModelForClass(TicketClass)
