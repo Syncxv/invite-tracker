@@ -17,9 +17,11 @@ export const SideButton: FunctionalComponent<SideButtonProps> = ({ Icon, title, 
 
     const selected = router.asPath === `/dashboard/servers/${router.query.id}${path === '/' ? '' : '/' + path}`
     return (
-        <>
+        <div className="w-full">
             <div
-                onClick={() => router.push(`${router.query.id}/${path === '/' ? '' : path}`)}
+                onClick={() =>
+                    !dropdown ? router.push(`${router.query.id}/${path === '/' ? '' : path}`) : setOpen(!isOpen)
+                }
                 className={`flex justify-between items-center gap-2 p-2 rounded-xl cursor-pointer ${
                     selected ? 'bg-slate-200' : ''
                 } hover:bg-primary-900`}
@@ -29,8 +31,17 @@ export const SideButton: FunctionalComponent<SideButtonProps> = ({ Icon, title, 
                     <div className="font-semibold text-gray-500">{title}</div>
                 </div>
                 {dropdown && <CaretDown className="mr-4 cursor-pointer" size={18} onClick={() => setOpen(!isOpen)} />}
-                {isOpen && dropdown && children}
             </div>
-        </>
+            {isOpen && dropdown && (
+                <div className="BRUH flex h-1/2 pl-5 mt-2 gap-4">
+                    <div className="line h-full w-[2px] bg-slate-50"></div>
+                    {children}
+                </div>
+            )}
+        </div>
     )
+}
+
+export const SideDropItem: FunctionalComponent = ({}) => {
+    return <div></div>
 }
