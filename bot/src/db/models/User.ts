@@ -1,7 +1,5 @@
-import { prop, Ref } from '@typegoose/typegoose'
-import { UserModel } from '.'
+import { getModelForClass, prop } from '@typegoose/typegoose'
 import { MongoDocument } from '../../types'
-import { GuildClass } from './Guild'
 
 export type InvitesBruh = {
     joins: number
@@ -20,16 +18,24 @@ export class UserClass {
     @prop()
     public userId?: string
 
-    @prop({ ref: () => GuildClass })
+    @prop()
     public guilds: {
-        [guildId: string]: Ref<GuildClass>
+        [guildId: string]: Bruh
     }
 
     public static async createUser(userId: string, guildId: string): Promise<MongoDocument<UserClass>> {
         const user = new UserModel({
             userId,
             guilds: {
-                [guildId]: await GuildClass.createGuild(guildId)
+                [guildId]: {
+                    messages: 0,
+                    invites: {
+                        joins: 0,
+                        leaves: 0,
+                        fake: 0,
+                        bonus: 0
+                    }
+                }
             }
         })
         await user.save()
@@ -41,7 +47,15 @@ export class UserClass {
         if (user == null) return await this.createUser(userId, guildId)
         const guild = user.guilds[guildId]
         if (!guild) {
-            user.guilds[guildId] = await GuildClass.createGuild(guildId)
+            user.guilds[guildId] = {
+                messages: 0,
+                invites: {
+                    joins: 0,
+                    leaves: 0,
+                    fake: 0,
+                    bonus: 0
+                }
+            }
             await user.save()
         }
         return user
@@ -66,3 +80,5 @@ export class UserClass {
         })
     }
 }
+
+export const UserModel = getModelForClass(UserClass)

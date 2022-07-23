@@ -1,26 +1,25 @@
-import { prop } from '@typegoose/typegoose'
-import { GuildModel } from '.'
-import { InvitesBruh } from './User'
+import { getModelForClass, prop } from '@typegoose/typegoose'
 
 export type Status = 'open' | 'closed'
 
 export class GuildClass {
     @prop()
-    guildId: string
+    public guildId: string
 
     @prop()
-    public messages: number
+    public ticketCategoryId?: string
 
-    @prop()
-    public invites: InvitesBruh
-
-    public static async createGuild(
-        guildId: string,
-        messages: number = 0,
-        invites: InvitesBruh = { joins: 0, leaves: 0, fake: 0, bonus: 0 }
-    ) {
-        const guild = new GuildModel({ guildId, messages, invites })
+    public static async createGuild(guildId: string) {
+        const guild = new GuildModel({ guildId })
         await guild.save()
         return guild
     }
+
+    public static async getGuild(guildId: string) {
+        const guild = await GuildModel.findOne({ guildId })
+        if (!guild) return await this.createGuild(guildId)
+        return guild
+    }
 }
+//idk why but GuildClass is undefined in ./index.ts :|
+export const GuildModel = getModelForClass(GuildClass)
