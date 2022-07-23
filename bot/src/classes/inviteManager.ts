@@ -1,16 +1,8 @@
-import {
-    Client,
-    Collection,
-    Guild,
-    GuildMember,
-    Invite,
-    PartialGuildMember
-} from 'discord.js'
+import { Client, Collection, Guild, GuildMember, Invite, PartialGuildMember } from 'discord.js'
 import { UserClass } from '../db/models/User'
 type GuildId = string
 export class InviteManager {
-    invites: Collection<GuildId, Collection<string, SimpleInvite>> =
-        new Collection()
+    invites: Collection<GuildId, Collection<string, SimpleInvite>> = new Collection()
 
     constructor() {
         this.onGuildMemberAdd = this.onGuildMemberAdd.bind(this)
@@ -22,15 +14,7 @@ export class InviteManager {
     async initalize(client: Client) {
         client.guilds.cache.forEach(async guild => {
             const firstInvites = await guild.invites.fetch({ cache: false })
-            this.invites.set(
-                guild.id,
-                new Collection(
-                    firstInvites.map(invite => [
-                        invite.code,
-                        new SimpleInvite(invite)
-                    ])
-                )
-            )
+            this.invites.set(guild.id, new Collection(firstInvites.map(invite => [invite.code, new SimpleInvite(invite)])))
         })
     }
 
@@ -40,19 +24,12 @@ export class InviteManager {
         console.log(cachedInvites, newInvites, member)
         try {
             const usedInvite = newInvites.find(
-                inv =>
-                    typeof inv.uses === 'number' &&
-                    inv.uses >
-                        (cachedInvites.get(inv!.code)?.uses || Number.MAX_VALUE)
+                inv => typeof inv.uses === 'number' && inv.uses > (cachedInvites.get(inv!.code)?.uses || Number.MAX_VALUE)
             )
             console.log(usedInvite, ' INVITE WAS USED :O')
             const inviter = usedInvite!.inviterId
             if (!inviter) return
-            await UserClass.incrementInvite(
-                inviter,
-                usedInvite!.guild!.id,
-                'joins'
-            )
+            await UserClass.incrementInvite(inviter, usedInvite!.guild!.id, 'joins')
             await UserClass.setInviter(member.id, member.guild.id, inviter)
         } catch (err) {
             console.error(err)
@@ -63,16 +40,10 @@ export class InviteManager {
         const guildData = leaver.guilds[member.guild.id]
         if (!guildData) return
         if (!guildData.inviter) return
-        await UserClass.incrementInvite(
-            guildData.inviter,
-            member.guild.id,
-            'leaves'
-        )
+        await UserClass.incrementInvite(guildData.inviter, member.guild.id, 'leaves')
     }
     async onInviteCreate(invite: Invite) {
-        this.invites
-            .get((invite.guild as Guild).id)!
-            .set(invite.code, new SimpleInvite(invite))
+        this.invites.get((invite.guild as Guild).id)!.set(invite.code, new SimpleInvite(invite))
     }
     async onInviteRemove(invite: Invite) {
         this.invites.get((invite.guild as Guild).id)!.delete(invite.code)
