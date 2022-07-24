@@ -1,4 +1,5 @@
-import { getModelForClass, prop } from '@typegoose/typegoose'
+import { getModelForClass, prop, Ref } from '@typegoose/typegoose'
+import { TicketClass } from './Ticket'
 
 export type Status = 'open' | 'closed'
 
@@ -8,6 +9,9 @@ export class GuildClass {
 
     @prop()
     public ticketCategoryId?: string
+
+    @prop({ ref: () => TicketClass })
+    public tickets: Ref<TicketClass>[]
 
     public static async createGuild(guildId: string) {
         const guild = new GuildModel({ guildId })
