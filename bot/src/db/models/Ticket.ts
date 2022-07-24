@@ -8,6 +8,9 @@ export class TicketClass {
     public client: Ref<UserClass>
 
     @prop()
+    public channelId: string
+
+    @prop()
     public responder?: Ref<UserClass>
 
     @prop()
@@ -19,11 +22,18 @@ export class TicketClass {
     @prop()
     public closeReason?: string
 
-    public static async createTicket(guildId: string, clientId: string, reason?: string, responderId?: string) {
+    public static async createTicket(
+        channelId: string,
+        guildId: string,
+        clientId: string,
+        reason?: string,
+        responderId?: string
+    ) {
         const client = await UserClass.getUser(clientId, guildId)
         const responder = responderId ? await UserClass.getUser(responderId, guildId) : undefined
 
         const ticket = new TicketModel({
+            channelId,
             client,
             responder,
             reason,
