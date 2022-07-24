@@ -1,8 +1,9 @@
 import { Command, SubCommand } from '../../types'
 import { getSubCommands } from '../../utils/getSubCommands'
 import { openTicket } from './openTicket'
+import { setupAddRoles } from './setupAddRoles'
 import { setupAuto } from './setupAuto'
-const options: SubCommand[] = [openTicket, setupAuto]
+const options: SubCommand[] = [openTicket, setupAuto, setupAddRoles]
 
 const subCommands = getSubCommands(options)
 
