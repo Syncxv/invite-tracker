@@ -22,6 +22,10 @@ export class GuildClass {
     @prop({ ref: () => TicketClass })
     public tickets: Ref<TicketClass>[]
 
+    isSetUp() {
+        return this.ticketCategoryId && this.ticketRoleIds.length >= 1 && this.ticketText
+    }
+
     public static async createGuild(guildId: string, { ticketCategoryId, ticketText }: CreateTicketOptions) {
         const guild = new GuildModel({ guildId, ticketCategoryId, ticketText })
         await guild.save()
