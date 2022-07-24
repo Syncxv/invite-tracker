@@ -16,7 +16,10 @@ export const setupAuto: SubCommand = {
             })
         const category = await interaction.guild.channels.create('tickets', { type: ChannelTypes.GUILD_CATEGORY })
         await guild.updateOne({
-            $set: { ticketCategoryId: category.id }
+            $set: {
+                ticketCategoryId: category.id,
+                ticketText: 'Welcome Wigga boy wait for someone to claim yo ticket and help you :)'
+            }
         })
         await interaction.reply('welll well well')
     }

@@ -1,10 +1,11 @@
-import { CategoryChannel } from 'discord.js'
+import { CategoryChannel, MessageActionRow, MessageButton } from 'discord.js'
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
 import { GuildClass } from '../../db/models/Guild'
 import { TicketClass } from '../../db/models/Ticket'
 import { SubCommand } from '../../types'
 import { getSubCommandOptions } from '../../utils/getSubCommandOptions'
-
+import { Colors } from '../../constants'
+import { client } from '../..'
 export const openTicket: SubCommand = {
     type: ApplicationCommandOptionTypes.SUB_COMMAND,
     name: 'open',
@@ -33,7 +34,7 @@ export const openTicket: SubCommand = {
             }
         })
         const category = interaction.guild.channels.cache.get(guild.ticketCategoryId) as CategoryChannel
-        await category.createChannel(`ticket ${guild.tickets.length + 1}`, {
+        const channel = await category.createChannel(`ticket ${guild.tickets.length + 1}`, {
             permissionOverwrites: [
                 {
                     id: interaction.guild.id,
@@ -45,8 +46,30 @@ export const openTicket: SubCommand = {
                 }
             ]
         })
+        const row = new MessageActionRow().addComponents(
+            new MessageButton().setCustomId('close').setLabel('Close').setStyle('DANGER').setEmoji('🔒'),
+
+            new MessageButton().setCustomId('close-with-reason').setLabel('Close With Reason').setStyle('DANGER').setEmoji('🔒'),
+
+            new MessageButton().setCustomId('claim').setLabel('Claim').setStyle('SUCCESS').setEmoji('😎')
+        )
+        await channel.send({
+            content: 'HEHHE HA HOW WAS YOUR DAY',
+            components: [row],
+            embeds: [
+                {
+                    title: (reason?.value as string | undefined) || 'reason not provided',
+                    description: guild.ticketText,
+                    color: Colors.success,
+                    footer: {
+                        text: 'Invite Tracker',
+                        iconURL: client.user!.avatarURL()!
+                    }
+                }
+            ]
+        })
         console.log(interaction, guild)
         ;(global as any).GuildClass = GuildClass
-        await interaction.reply('welll well well')
+        await interaction.reply(`created ticket at <#${channel.id}>`)
     }
 }
