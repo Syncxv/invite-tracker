@@ -53,7 +53,7 @@ export const openTicket: SubCommand = {
             new MessageButton().setCustomId(ButtonIds.close).setLabel('Close').setStyle('DANGER').setEmoji('🔒'),
 
             new MessageButton()
-                .setCustomId(ButtonIds.createCloseWithReason(ButtonIds.closeWithReason))
+                .setCustomId(ButtonIds.closeWithReason)
                 .setLabel('Close With Reason')
                 .setStyle('DANGER')
                 .setEmoji('🔒'),
