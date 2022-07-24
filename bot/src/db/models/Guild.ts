@@ -20,6 +20,13 @@ export class GuildClass {
         if (!guild) return await this.createGuild(guildId)
         return guild
     }
+
+    public static async set(guildId: string, keys: string, value: any) {
+        const guild = await this.getGuild(guildId)
+        await guild.updateOne({
+            $set: { [keys]: value }
+        })
+    }
 }
 //idk why but GuildClass is undefined in ./index.ts :|
 export const GuildModel = getModelForClass(GuildClass)
