@@ -11,6 +11,9 @@ export class GuildClass {
     public guildId: string
 
     @prop()
+    public ticketRoleIds: string[]
+
+    @prop()
     public ticketCategoryId?: string
 
     @prop()

@@ -1,4 +1,4 @@
-import { CategoryChannel, MessageActionRow, MessageButton } from 'discord.js'
+import { CategoryChannel, MessageActionRow, MessageButton, OverwriteResolvable } from 'discord.js'
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums'
 import { GuildClass } from '../../db/models/Guild'
 import { TicketClass } from '../../db/models/Ticket'
@@ -44,7 +44,8 @@ export const openTicket: SubCommand = {
                 {
                     id: interaction.user.id,
                     allow: ['VIEW_CHANNEL']
-                }
+                },
+                ...(guild.ticketRoleIds.map(s => ({ id: s, allow: ['VIEW_CHANNEL'] })) as OverwriteResolvable[])
             ]
         })
         const row = new MessageActionRow().addComponents(

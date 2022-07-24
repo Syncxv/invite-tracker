@@ -14,12 +14,18 @@ export const setupAuto: SubCommand = {
                 content: 'seems like its alreayd been setup before do `/ticket setup ticketCategory`',
                 ephemeral: true
             })
+        const ticketRole = await interaction.guild.roles.create({
+            name: 'Ticket Support Wigga',
+            color: 'BLUE',
+            reason: 'FOR THE BOT :|'
+        })
         const category = await interaction.guild.channels.create('tickets', { type: ChannelTypes.GUILD_CATEGORY })
         await guild.updateOne({
             $set: {
                 ticketCategoryId: category.id,
                 ticketText: 'Welcome Wigga boy wait for someone to claim yo ticket and help you :)'
-            }
+            },
+            $push: { ticketRoleIds: ticketRole.id }
         })
         await interaction.reply('welll well well')
     }
