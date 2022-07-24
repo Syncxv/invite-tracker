@@ -4,7 +4,7 @@ import { GuildClass } from '../../db/models/Guild'
 import { TicketClass } from '../../db/models/Ticket'
 import { SubCommand } from '../../types'
 import { getSubCommandOptions } from '../../utils/getSubCommandOptions'
-import { Colors } from '../../constants'
+import { ButtonIds, Colors } from '../../constants'
 import { client } from '../..'
 export const openTicket: SubCommand = {
     type: ApplicationCommandOptionTypes.SUB_COMMAND,
@@ -24,13 +24,14 @@ export const openTicket: SubCommand = {
         if (!guild.ticketCategoryId)
             return await interaction.reply({ content: 'wigga boy do `/ticket setup-auto` first', ephemeral: true })
         const [reason] = getSubCommandOptions(interaction)
+        const ticket = await TicketClass.createTicket(
+            interaction.guild.id,
+            interaction.user.id,
+            (reason?.value as string | undefined) || 'reason not provided'
+        )
         await guild.updateOne({
             $push: {
-                tickets: await TicketClass.createTicket(
-                    interaction.guild.id,
-                    interaction.user.id,
-                    (reason?.value as string | undefined) || 'reason not provided'
-                )
+                tickets: ticket
             }
         })
         const category = interaction.guild.channels.cache.get(guild.ticketCategoryId) as CategoryChannel
@@ -47,11 +48,23 @@ export const openTicket: SubCommand = {
             ]
         })
         const row = new MessageActionRow().addComponents(
-            new MessageButton().setCustomId('close').setLabel('Close').setStyle('DANGER').setEmoji('🔒'),
+            new MessageButton()
+                .setCustomId(ButtonIds.createClose(ticket._id.toString()))
+                .setLabel('Close')
+                .setStyle('DANGER')
+                .setEmoji('🔒'),
 
-            new MessageButton().setCustomId('close-with-reason').setLabel('Close With Reason').setStyle('DANGER').setEmoji('🔒'),
+            new MessageButton()
+                .setCustomId(ButtonIds.createCloseWithReason(ticket._id.toString()))
+                .setLabel('Close With Reason')
+                .setStyle('DANGER')
+                .setEmoji('🔒'),
 
-            new MessageButton().setCustomId('claim').setLabel('Claim').setStyle('SUCCESS').setEmoji('😎')
+            new MessageButton()
+                .setCustomId(ButtonIds.createClaim(ticket._id.toString()))
+                .setLabel('Claim')
+                .setStyle('SUCCESS')
+                .setEmoji('😎')
         )
         await channel.send({
             content: 'HEHHE HA HOW WAS YOUR DAY',

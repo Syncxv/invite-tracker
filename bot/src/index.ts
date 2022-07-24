@@ -14,12 +14,7 @@ import tryCatchExecute from './utils/tryCatch'
 const { TOKEN } = process.env
 
 export const client = new Client({
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_INVITES,
-        Intents.FLAGS.GUILD_MEMBERS
-    ]
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_INVITES, Intents.FLAGS.GUILD_MEMBERS]
 })
 
 const rest = new REST({ version: '9' }).setToken(TOKEN!)
@@ -40,18 +35,18 @@ const main = async () => {
             const index = commandNames.indexOf(interaction.commandName)
             if (index != -1) {
                 //TODO: i feel like you can use decorators for this but ill get to it later
-                tryCatchExecute(commands[index].execute)(interaction)
+                return tryCatchExecute(commands[index].execute)(interaction)
             }
+        }
+        if (interaction.isButton()) {
+            console.log(interaction)
+            interaction.reply({ content: ':)', ephemeral: true })
         }
     })
 
     client.on('messageCreate', async message => {
         if (message.guild) {
-            await UserClass.incrementAttr(
-                message.author.id,
-                message.guild.id,
-                'messages'
-            )
+            await UserClass.incrementAttr(message.author.id, message.guild.id, 'messages')
         }
     })
 
