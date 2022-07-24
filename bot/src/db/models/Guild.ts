@@ -22,7 +22,7 @@ export class GuildClass {
     public static async getGuild(guildId: string) {
         const guild = await GuildModel.findOne({ guildId })
         if (!guild) return await this.createGuild(guildId)
-        return guild
+        return guild.populate({ path: 'tickets' })
     }
 
     public static async set(guildId: string, keys: string, value: any) {

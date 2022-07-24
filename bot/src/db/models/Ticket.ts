@@ -1,28 +1,32 @@
-import { getModelForClass, prop } from '@typegoose/typegoose'
+import { getModelForClass, prop, Ref } from '@typegoose/typegoose'
 import { UserClass } from './User'
 
 export type Status = 'open' | 'closed'
 
 export class TicketClass {
-    @prop()
-    public client: UserClass
+    @prop({ ref: () => UserClass })
+    public client: Ref<UserClass>
 
     @prop()
-    public responder: UserClass
+    public responder?: Ref<UserClass>
 
     @prop()
     public status: Status
 
     @prop()
+    public reason?: string
+
+    @prop()
     public closeReason?: string
 
-    public static async createTicket(clientId: string, responderId: string, guildId: string) {
+    public static async createTicket(guildId: string, clientId: string, reason?: string, responderId?: string) {
         const client = await UserClass.getUser(clientId, guildId)
-        const responder = await UserClass.getUser(responderId, guildId)
+        const responder = responderId ? await UserClass.getUser(responderId, guildId) : undefined
 
         const ticket = new TicketModel({
             client,
             responder,
+            reason,
             status: 'open'
         })
         await ticket.save()
