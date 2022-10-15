@@ -1,11 +1,9 @@
-import { ButtonInteraction, CacheType } from 'discord.js'
+import { ButtonInteraction, CacheType, GuildMember, GuildMemberRoleManager } from 'discord.js'
 import { GuildClass } from '../db/models/Guild'
 import { TicketClass, TicketModel } from '../db/models/Ticket'
 import { MongoDocument } from '../types'
 
-export const isValidticket = async (
-    interaction: ButtonInteraction<CacheType>
-): Promise<[MongoDocument<GuildClass>, MongoDocument<TicketClass>] | false> => {
+export const getTicket = async (interaction: ButtonInteraction<CacheType>): Promise<MongoDocument<TicketClass> | false> => {
     if (!interaction.guild) {
         await interaction.reply({ content: 'bruh where tf is the guild wigga', ephemeral: true })
         return false
@@ -21,6 +19,16 @@ export const isValidticket = async (
         })
         return false
     }
-
-    return [guild, ticket]
+    if (
+        interaction.user.id !== interaction.guild!.ownerId &&
+        !(interaction.member as GuildMember).permissions.has('ADMINISTRATOR') &&
+        !(interaction.member!.roles as GuildMemberRoleManager).cache.hasAny(...guild.ticketRoleIds)
+    ) {
+        await interaction.reply({
+            content: 'only staff can do that :| if you a staff do `/ticket setup-add-roles` and add your role gg ez',
+            ephemeral: true
+        })
+        return false
+    }
+    return ticket
 }

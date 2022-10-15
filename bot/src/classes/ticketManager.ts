@@ -1,32 +1,12 @@
-import {
-    GuildMember,
-    GuildMemberRoleManager,
-    Message,
-    MessageActionRow,
-    MessageButton,
-    CacheType,
-    ButtonInteraction,
-    TextChannel
-} from 'discord.js'
+import { Message, MessageActionRow, MessageButton, CacheType, ButtonInteraction, TextChannel } from 'discord.js'
 import { ButtonIds } from '../constants'
-import { isValidticket } from '../utils/isValidTicket'
+import { getTicket } from '../utils/isValidTicket'
 
 export class TicketManager {
     async claimTicket(interaction: ButtonInteraction<CacheType>) {
         if (!interaction.isButton()) return
-        const isValid = await isValidticket(interaction)
-        if (!Array.isArray(isValid)) return
-        const [guild, ticket] = isValid
-        //check if they in the role list
-        if (
-            interaction.user.id !== interaction.guild!.ownerId &&
-            !(interaction.member as GuildMember).permissions.has('ADMINISTRATOR') &&
-            !(interaction.member!.roles as GuildMemberRoleManager).cache.hasAny(...guild.ticketRoleIds)
-        )
-            return await interaction.reply({
-                content: 'only staff can do that :| if you a staff do `/ticket setup-add-roles` and add your role gg ez',
-                ephemeral: true
-            })
+        const ticket = await getTicket(interaction)
+        if (!ticket) return
         await ticket.updateOne({
             $set: { responder: interaction.user.id }
         })
@@ -51,20 +31,10 @@ export class TicketManager {
     }
 
     async closeTicket(interaction: ButtonInteraction<CacheType>) {
-        const isValid = await isValidticket(interaction)
-        if (!Array.isArray(isValid)) return
-        const [guild, ticket] = isValid
-        if (
-            interaction.user.id !== interaction.guild!.ownerId &&
-            !(interaction.member as GuildMember).permissions.has('ADMINISTRATOR') &&
-            !(interaction.member!.roles as GuildMemberRoleManager).cache.hasAny(...guild.ticketRoleIds)
-        )
-            return await interaction.reply({
-                content: 'only staff can do that :| if you a staff do `/ticket setup-add-roles` and add your role gg ez',
-                ephemeral: true
-            })
-        await ticket.updateOne({ $set: { status: 'closed' } })
         if (!interaction.channel?.isText()) return
+        const ticket = await getTicket(interaction)
+        if (!ticket) return
+        await ticket.updateOne({ $set: { status: 'closed' } })
         ;(interaction.channel as TextChannel).permissionOverwrites.edit(interaction.guildId!, { SEND_MESSAGES: false })
         await (interaction.message as Message).edit({
             components: [
@@ -81,20 +51,10 @@ export class TicketManager {
     }
 
     async reOpenTicket(interaction: ButtonInteraction<CacheType>) {
-        const isValid = await isValidticket(interaction)
-        if (!Array.isArray(isValid)) return
-        const [guild, ticket] = isValid
-        if (
-            interaction.user.id !== interaction.guild!.ownerId &&
-            !(interaction.member as GuildMember).permissions.has('ADMINISTRATOR') &&
-            !(interaction.member!.roles as GuildMemberRoleManager).cache.hasAny(...guild.ticketRoleIds)
-        )
-            return await interaction.reply({
-                content: 'only staff can do that :| if you a staff do `/ticket setup-add-roles` and add your role gg ez',
-                ephemeral: true
-            })
-        await ticket.updateOne({ $set: { status: 'open' } })
         if (!interaction.channel?.isText()) return
+        const ticket = await getTicket(interaction)
+        if (!ticket) return
+        await ticket.updateOne({ $set: { status: 'open' } })
         ;(interaction.channel as TextChannel).permissionOverwrites.edit(interaction.guildId!, { SEND_MESSAGES: true })
         await (interaction.message as Message).edit({
             components: [
