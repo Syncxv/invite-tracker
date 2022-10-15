@@ -4,9 +4,7 @@ class MongooseDB {
     connection: mongoose.Connection
 
     async getConnection() {
-        const { connection: db } = await mongoose.connect(
-            process.env.MONGODB_URL || 'mongodb://localhost/inv-t'
-        )
+        const { connection: db } = await mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/inv-t')
         this.connection = db
     }
     initalize() {
