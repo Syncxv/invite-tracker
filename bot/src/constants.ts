@@ -22,6 +22,7 @@ export const ButtonIds = {
     closeTicket: 'close-ticket',
     closeTicketWithReason: 'close-ticket-with-reason',
     claimTicket: 'claim-ticket',
+    reOpenTicket: 're-open-ticket',
     createClose: (prefix: string) => `close-ticket-${prefix}`,
     createCloseWithReason: (prefix: string) => `close-ticket-with-reason-${prefix}`,
     createClaim: (prefix: string) => `claim-ticket-${prefix}`

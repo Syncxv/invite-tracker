@@ -44,6 +44,10 @@ const main = async () => {
             switch (interaction.customId) {
                 case ButtonIds.claimTicket:
                     return ticketManager.claimTicket(interaction)
+                case ButtonIds.closeTicket:
+                    return ticketManager.closeTicket(interaction)
+                case ButtonIds.reOpenTicket:
+                    return ticketManager.reOpenTicket(interaction)
             }
         }
     })
