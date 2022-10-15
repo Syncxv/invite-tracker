@@ -13,9 +13,7 @@ import { isValidticket } from '../utils/isValidTicket'
 export class TicketManager {
     async claimTicket(interaction: ButtonInteraction<CacheType>) {
         if (!interaction.isButton()) return
-        console.log(interaction)
         const isValid = await isValidticket(interaction)
-        console.log(isValid)
         if (!Array.isArray(isValid)) return
         const [guild, ticket] = isValid
         //check if they in the role list
