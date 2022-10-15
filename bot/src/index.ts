@@ -42,7 +42,7 @@ const main = async () => {
         }
         if (interaction.isButton()) {
             switch (interaction.customId) {
-                case ButtonIds.claim:
+                case ButtonIds.claimTicket:
                     return ticketManager.claimTicket(interaction)
             }
         }

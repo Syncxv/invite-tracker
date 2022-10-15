@@ -50,15 +50,15 @@ export const openTicket: SubCommand = {
             }
         })
         const row = new MessageActionRow().addComponents(
-            new MessageButton().setCustomId(ButtonIds.close).setLabel('Close').setStyle('DANGER').setEmoji('🔒'),
+            new MessageButton().setCustomId(ButtonIds.closeTicket).setLabel('Close').setStyle('DANGER').setEmoji('🔒'),
 
             new MessageButton()
-                .setCustomId(ButtonIds.closeWithReason)
+                .setCustomId(ButtonIds.closeTicketWithReason)
                 .setLabel('Close With Reason')
                 .setStyle('DANGER')
                 .setEmoji('🔒'),
 
-            new MessageButton().setCustomId(ButtonIds.claim).setLabel('Claim').setStyle('SUCCESS').setEmoji('😎')
+            new MessageButton().setCustomId(ButtonIds.claimTicket).setLabel('Claim').setStyle('SUCCESS').setEmoji('😎')
         )
         await channel.send({
             content: 'HEHHE HA HOW WAS YOUR DAY',

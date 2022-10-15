@@ -15,7 +15,8 @@ export class TicketManager {
     async claimTicket(interaction: ButtonInteraction<CacheType>) {
         if (!interaction.isButton()) return
         console.log(interaction)
-        if (!interaction.guild) return await interaction.reply({ content: 'bruh where tf is the guild wigga', ephemeral: true })
+        if (!interaction.guild)
+            return await interaction.reply({ content: 'bruh where tf is the guild wigga', ephemeral: true })
         const guild = await GuildClass.getGuild(interaction.guild.id)
         const ticket = await TicketModel.findOne({ channelId: interaction.channelId })
         if (!guild.isSetUp() || ticket == null)
@@ -40,10 +41,14 @@ export class TicketManager {
         await (interaction.message as Message).edit({
             components: [
                 new MessageActionRow().addComponents(
-                    new MessageButton().setCustomId(ButtonIds.close).setLabel('Close').setStyle('DANGER').setEmoji('🔒'),
+                    new MessageButton()
+                        .setCustomId(ButtonIds.closeTicket)
+                        .setLabel('Close')
+                        .setStyle('DANGER')
+                        .setEmoji('🔒'),
 
                     new MessageButton()
-                        .setCustomId(ButtonIds.closeWithReason)
+                        .setCustomId(ButtonIds.closeTicketWithReason)
                         .setLabel('Close With Reason')
                         .setStyle('DANGER')
                         .setEmoji('🔒')
