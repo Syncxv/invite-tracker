@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+    server:
+        image: server
+        build: .
+        environment:
+            PORT: 3000
+            NODE_ENV: production
+            TOKEN: ${TOKEN}
+        ports:
+            - 3000:3000
+        volumes:
+            - ./:/app
+        links:
+            - mongodb
+        # command: tail -f /dev/null
+    mongodb:
+        image: mongo:4.0-xenial
+        ports:
+            - 27017:27017
+        volumes:
+            - data:/data/db
+
+volumes:
+    data:
