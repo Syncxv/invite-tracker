@@ -1,10 +1,6 @@
-import { signOut, useSession } from 'next-auth/react'
 import Layout from '../../components/Layout'
-import botApi from '../../botApi'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { Guild } from '../../types/discord'
 import { ServerCard } from '../../components/molecules/ServerCard'
+import { useGetServers } from '../../hooks/useGetServers'
 
 interface Props {}
 
@@ -22,16 +18,3 @@ const Dashboard: React.FC<Props> = () => {
     )
 }
 export default Dashboard
-
-const useGetServers = () => {
-    const { status } = useSession()
-    const router = useRouter()
-    const [servers, setServers] = useState<Guild[]>([])
-    useEffect(() => {
-        if (status !== 'authenticated') {
-            router.push('/')
-        }
-        botApi.getGuilds().then(res => setServers(res))
-    }, [])
-    return servers
-}
