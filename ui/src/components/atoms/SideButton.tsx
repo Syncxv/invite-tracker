@@ -8,7 +8,7 @@ interface SideButtonProps {
     title: string
     letter?: string
     dropdown: boolean
-    path: string
+    path?: string
 }
 
 export const SideButton: FunctionalComponent<SideButtonProps> = ({ Icon, title, dropdown, path, children }) => {
