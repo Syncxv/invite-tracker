@@ -9,15 +9,7 @@ import { ServerCard } from '../../components/molecules/ServerCard'
 interface Props {}
 
 const Dashboard: React.FC<Props> = () => {
-    const { data, status } = useSession()
-    const router = useRouter()
-    const [servers, setServers] = useState<Guild[]>([])
-    useEffect(() => {
-        if (status !== 'authenticated') {
-            router.push('/')
-        }
-        botApi.getGuilds().then(res => setServers(res))
-    }, [])
+    const servers = useGetServers()
     return (
         <Layout>
             <h2 className="ml-32 text-bold text-2xl">Servers</h2>
@@ -30,3 +22,16 @@ const Dashboard: React.FC<Props> = () => {
     )
 }
 export default Dashboard
+
+const useGetServers = () => {
+    const { status } = useSession()
+    const router = useRouter()
+    const [servers, setServers] = useState<Guild[]>([])
+    useEffect(() => {
+        if (status !== 'authenticated') {
+            router.push('/')
+        }
+        botApi.getGuilds().then(res => setServers(res))
+    }, [])
+    return servers
+}
