@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { SquaresFour } from 'phosphor-react'
 import { useEffect } from 'react'
+import Divider from '../../../components/atoms/Divider'
 import { SideButton } from '../../../components/atoms/SideButton'
 import Layout from '../../../components/Layout'
 import { FunctionalComponent } from '../../../types/react'
@@ -18,8 +19,8 @@ const ManageServer: FunctionalComponent = ({}) => {
                         />
                         <h1>Cool Name</h1>
                     </div>
-
-                    <div className="side-section flex flex-col h-full gap-4">
+                    <Divider />
+                    <div className="side-section flex flex-col h-full gap-4 pt-14">
                         <h4 className="text-gray-200 text-sm font-bold mb-4">Main Sheet</h4>
                         <SideButton Icon={SquaresFour} title="Dashbaord" dropdown={false} path="/" />
                         <SideButton Icon={SquaresFour} title="Stuff" dropdown={true} path="/stuff">

@@ -23,7 +23,7 @@ export const SideButton: FunctionalComponent<SideButtonProps> = ({ Icon, title, 
                     !dropdown ? router.push(`${router.query.id}/${path === '/' ? '' : path}`) : setOpen(!isOpen)
                 }
                 className={`flex justify-between items-center gap-2 p-2 rounded-xl cursor-pointer ${
-                    selected ? 'bg-slate-200' : ''
+                    selected ? 'bg-slate-200 hover:!bg-slate-300' : ''
                 } hover:bg-primary-900`}
             >
                 <div className="flex items-center gap-4">

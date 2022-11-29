@@ -38,7 +38,7 @@ export default NextAuth({
         async session({ session, user, token }) {
             console.log('IN SESSION CALLBACK', session, user, token)
             session.accessToken = token.accessToken as string
-            session.refreshToken = token.refreshToken
+            ;(session as any).refreshToken = token.refreshToken
             session.user = token.user as any
             return session
         }
