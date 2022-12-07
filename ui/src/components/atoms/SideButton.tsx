@@ -15,7 +15,8 @@ export const SideButton: FunctionalComponent<SideButtonProps> = ({ Icon, title, 
     const [isOpen, setOpen] = useState(false)
     const router = useRouter()
 
-    const selected = router.asPath === `/dashboard/servers/${router.query.id}${path === '/' ? '' : '/' + path}`
+    const selected = router.asPath.endsWith(`${router.query.id}${path === '/' ? '' : '/' + path}`)
+    console.log(router.asPath, `${router.query.id}${path === '/' ? '' : '/' + path}`)
     return (
         <div className="w-full">
             <div
