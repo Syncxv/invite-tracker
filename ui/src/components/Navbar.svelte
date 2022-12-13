@@ -1,8 +1,8 @@
 <nav class="navbar">
     <div class="navbar__first">
         <span class="title">I-T</span>
-        <li ><a class="nav-item"  href="/home">Home</a></li>
         <li ><a class="nav-item" href="/dashboard">Dashboard</a></li>
+        <li ><a class="nav-item"  href="/contact">Contact</a></li>
     </div>
 
     <button class="navbar__login-btn">
