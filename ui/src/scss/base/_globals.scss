@@ -1,0 +1,58 @@
+@import url(https://api.fontshare.com/v2/css?f[]=red-hat-display@401,800,501,601,900,901,301,300,801,700,400,500,701,600&display=swap);
+
+$brand: #f251e2;
+$background: #0e0e0e;
+
+:root {
+    --brand: #{$brand};
+    --background: #{$background};
+}
+
+body {
+    // background-color: var(--background);
+    background: var(--background);
+    color: #fcfffe;
+    font-family: 'Red Hat Display', sans-serif;
+    overflow: hidden;
+}
+
+section {
+    height: 100vh;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    position: relative;
+}
+
+.scroller {
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+}
+
+.-inverse {
+    color: black;
+}
+
+.page-enter {
+    opacity: 0;
+}
+.page-enter-active {
+    opacity: 1;
+    transition: opacity 400ms;
+    transition-delay: 600ms;
+}
+.page-exit {
+    opacity: 1;
+}
+.page-exit-active {
+    opacity: 0;
+    transition: opacity 400ms;
+}
+
+.scrollbar-track.scrollbar-track-y {
+    background: 0 0;
+    .scrollbar-thumb.scrollbar-thumb-y {
+        background: rgba(83, 83, 83, 0.5);
+    }
+}
