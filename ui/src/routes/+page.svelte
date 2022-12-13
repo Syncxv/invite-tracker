@@ -1,6 +1,4 @@
-<script>
-    import "../scss/_main.scss"
-</script>
+
 <svelte:head>
     <title>Hey there</title>
 </svelte:head>
