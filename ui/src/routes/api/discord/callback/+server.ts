@@ -1,31 +1,52 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import dotenv from 'dotenv';
+import type { DiscordAuthData } from '$lib/types';
 dotenv.config();
 
 const DISCORD_CLIENT_ID = process.env.CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.CLIENT_SECRET;
 const DISCORD_REDIRECT_URI = process.env.REDIRECT_URL!;
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, cookies }) => {
 	const code = url.searchParams.get('code');
-	if (code == null) return new Response('bruh where is the code');
+	if (code == null) return new Response('bruh where is the code', { headers: { location: '/' } });
 
-	const dataObj = {
+	const dataObj: DiscordAuthData = {
 		client_id: DISCORD_CLIENT_ID!,
 		client_secret: DISCORD_CLIENT_SECRET!,
 		grant_type: 'authorization_code',
 		redirect_uri: DISCORD_REDIRECT_URI!,
-		code,
-		scope: 'identify email guilds'
+		code
 	};
 
-	// performing a Fetch request to Discord's token endpoint
+	// get the access token
 	const request = await fetch('https://discord.com/api/oauth2/token', {
 		method: 'POST',
-		body: new URLSearchParams(dataObj),
+		body: new URLSearchParams(dataObj as any),
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	});
-	const response = await request.json();
+	const jsonRes = await request.json();
 
-	return new Response(JSON.stringify(response));
+	if (jsonRes.error) {
+		console.error(jsonRes);
+		return new Response('well', { headers: { location: '/' } });
+	}
+
+	cookies.set('access_token', jsonRes.access_token, {
+		path: '/',
+		httpOnly: true,
+		maxAge: jsonRes.expires_in
+	});
+	cookies.set('refresh_token', jsonRes.refresh_token, {
+		path: '/',
+		httpOnly: true,
+		maxAge: 30 * 24 * 60 * 60 * 1000
+	});
+
+	return new Response(null, {
+		headers: {
+			location: '/'
+		},
+		status: 302
+	});
 };
