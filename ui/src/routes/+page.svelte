@@ -1,6 +1,6 @@
 <script>
 import Navbar from "../components/Navbar.svelte";
-
+import {page} from '$app/stores'
 </script>
 
 <svelte:head>
@@ -9,6 +9,7 @@ import Navbar from "../components/Navbar.svelte";
 
 <Navbar />
 <main class="container">
+    <div>{$page.status}</div>
     <header>
         <div class="container">
             <h1 class="heading">Cool Bot</h1>
