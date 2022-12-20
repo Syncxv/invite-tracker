@@ -1,10 +1,15 @@
-export type DiscordAuthResponse = {
-	access_token: string;
-	token_type: 'Bearer';
-	expires_in: number;
-	refresh_token: string;
-	scope: string;
-};
+export type DiscordAuthResponse =
+	| {
+			access_token: string;
+			token_type: 'Bearer';
+			expires_in: number;
+			refresh_token: string;
+			scope: string;
+	  }
+	| {
+			error: string;
+			error_description: string;
+	  };
 
 export interface DiscordAuthData {
 	client_id: string;

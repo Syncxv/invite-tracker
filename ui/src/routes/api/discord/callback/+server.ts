@@ -1,21 +1,17 @@
 import { redirect, type RequestHandler } from '@sveltejs/kit';
-import dotenv from 'dotenv';
 import type { DiscordAuthData } from '$lib/types';
-dotenv.config();
 
-const DISCORD_CLIENT_ID = process.env.CLIENT_ID;
-const DISCORD_CLIENT_SECRET = process.env.CLIENT_SECRET;
-const DISCORD_REDIRECT_URI = process.env.REDIRECT_URL!;
+import { CLIENT_SECRET, CLIENT_ID, REDIRECT_URL } from '$env/static/private';
 
 export const GET: RequestHandler = async ({ url, cookies }) => {
 	const code = url.searchParams.get('code');
 	if (code == null) throw redirect(304, '/');
 
 	const dataObj: DiscordAuthData = {
-		client_id: DISCORD_CLIENT_ID!,
-		client_secret: DISCORD_CLIENT_SECRET!,
+		client_id: CLIENT_ID!,
+		client_secret: CLIENT_SECRET!,
 		grant_type: 'authorization_code',
-		redirect_uri: DISCORD_REDIRECT_URI!,
+		redirect_uri: REDIRECT_URL!,
 		code
 	};
 
