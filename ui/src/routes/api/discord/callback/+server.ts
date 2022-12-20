@@ -1,4 +1,4 @@
-import type { RequestHandler } from '@sveltejs/kit';
+import { redirect, type RequestHandler } from '@sveltejs/kit';
 import dotenv from 'dotenv';
 import type { DiscordAuthData } from '$lib/types';
 dotenv.config();
@@ -9,7 +9,7 @@ const DISCORD_REDIRECT_URI = process.env.REDIRECT_URL!;
 
 export const GET: RequestHandler = async ({ url, cookies }) => {
 	const code = url.searchParams.get('code');
-	if (code == null) return new Response('bruh where is the code', { headers: { location: '/' } });
+	if (code == null) throw redirect(304, '/');
 
 	const dataObj: DiscordAuthData = {
 		client_id: DISCORD_CLIENT_ID!,
@@ -29,7 +29,7 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 
 	if (jsonRes.error) {
 		console.error(jsonRes);
-		return new Response('well', { headers: { location: '/' } });
+		throw redirect(304, '/');
 	}
 
 	cookies.set('access_token', jsonRes.access_token, {
