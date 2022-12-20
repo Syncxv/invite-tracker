@@ -7,50 +7,26 @@ import Navbar from "../components/Navbar.svelte";
     <title>Hey there</title>
 </svelte:head>
 
-<main>
-    <Navbar />
-    <div class="wrapper">
-        <div class="hero">
+<Navbar />
+<main class="container">
+    <header>
+        <div class="container">
             <h1 class="heading">Cool Bot</h1>
             <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, reprehenderit.</p>
+            <p><a role="button" href="/dashboard" class="cta-button">Dashboard</a></p>
         </div>
-
-        <a href="/dashboard" class="cta-button">Dashboard</a>
-    </div>
+    </header>
 </main>
 
-<style lang="scss"> 
-    .wrapper {
-        display: grid;
-        place-content: center;
-        height: 80vh;
+<style lang="scss">
+    header {
+        margin-top: calc(var(--spacing) * 3);
         text-align: center;
-        justify-items: center;
-        .hero {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            .heading {
-                font-size: 6rem;
-            }
-            .desc {
-                font-size: 2rem;
-            }
+        p {
+            margin-top: var(--spacing);
         }
-        .cta-button {
-            width: fit-content;
-            background-color: var(--brand);
-            padding: .8rem 1rem;
-            font-weight: bold;
-            font-size: 1.5rem;
-            border: none;
-            text-decoration: none;
-            border-radius: 6px;
-            color: white;
-            &:hover {
-                cursor: pointer;
-            }
+        h1 {
+            font-size: 4rem;
         }
     }
 </style>
