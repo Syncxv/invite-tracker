@@ -9,7 +9,7 @@ export let data: PageData
     <title>Hey there</title>
 </svelte:head>
 
-<Navbar data={data} />
+<Navbar user={data.user} />
 <main class="container">
     <header>
         <div class="container">
