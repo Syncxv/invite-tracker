@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { APIUser } from 'discord-api-types/v10';
 	import type { PageData } from '../routes/$types';
+  import {fade} from 'svelte/transition'
   export let user: APIUser | null
 
   $: isOpened = false;
@@ -26,7 +27,7 @@
           style={`transition: transform 200ms cubic-bezier(0, 0.84, 0.25, 1) 0s;font-size: 28px; transform: rotate(${isOpened ? "180deg" : "0deg"})`}
           ></iconify-icon>
           {#if isOpened}
-            <div class="dropdown" role="listbox">
+            <div transition:fade={{duration: 200}} class="dropdown" role="listbox">
             <li>
               <a href="/servers">
                 My Servers
