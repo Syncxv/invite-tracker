@@ -1,13 +1,10 @@
 <script lang="ts">
-import Navbar from "../../components/Navbar.svelte";
 import type {
     PageData
 } from "./$types";
 
 export let data: PageData
-console.log(data)
 </script>
-
 <main>
     <div class="container">
         <h1>Servers</h1>
