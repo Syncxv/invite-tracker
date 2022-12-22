@@ -9,13 +9,12 @@ export let data: PageData
     <title>Hey there</title>
 </svelte:head>
 
-<Navbar user={data.user} />
 <main class="container">
     <header>
         <div class="container">
             <h1 class="heading">Cool Bot</h1>
             <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, reprehenderit.</p>
-            <p><a role="button" href="/dashboard" class="cta-button">Dashboard</a></p>
+            <p><a role="button" href="/servers" class="cta-button">Dashboard</a></p>
         </div>
     </header>
 </main>

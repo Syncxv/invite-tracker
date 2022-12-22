@@ -8,7 +8,6 @@ export let data: PageData
 </script>
 
 <main>
-    <Navbar user={data.user} />
     <div class="container">
         <h1>Servers</h1>
         <div class="grid">

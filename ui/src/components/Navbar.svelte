@@ -11,7 +11,7 @@
 <nav class="container">
   
     <ul>
-      <li><strong>Invite Tracker</strong></li>
+      <li><strong><a class="name" href="/">Invite Tracker</a></strong></li>
     </ul>
     <ul>
       <li><a href="/">Dashboard</a></li>
@@ -48,6 +48,9 @@
 <style lang="scss">
     nav {
         padding: var(--spacing);
+        .name {
+          color: var(--h1-color);
+        }
         .user {
           position: relative;
         	cursor: pointer;
