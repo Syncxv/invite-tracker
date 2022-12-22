@@ -15,7 +15,7 @@ export const setupAuto: SubCommand = {
                 ephemeral: true
             })
         const ticketRole = await interaction.guild.roles.create({
-            name: 'Ticket Support Wigga',
+            name: 'Ticket Support architecture',
             color: 'BLUE',
             reason: 'FOR THE BOT :|'
         })
@@ -23,7 +23,7 @@ export const setupAuto: SubCommand = {
         await guild.updateOne({
             $set: {
                 ticketCategoryId: category.id,
-                ticketText: 'Welcome Wigga boy wait for someone to claim yo ticket and help you :)'
+                ticketText: 'Welcome architecture boy wait for someone to claim yo ticket and help you :)'
             },
             $push: { ticketRoleIds: ticketRole.id }
         })

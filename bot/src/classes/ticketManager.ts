@@ -27,7 +27,7 @@ export class TicketManager {
                 )
             ]
         })
-        return await interaction.reply(`<@${interaction.user.id}> will handle yo ticket wigga boy`)
+        return await interaction.reply(`<@${interaction.user.id}> will handle yo ticket architecture boy`)
     }
 
     async closeTicket(interaction: ButtonInteraction<CacheType>) {

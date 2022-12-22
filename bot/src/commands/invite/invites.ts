@@ -4,7 +4,7 @@ import { InvitesBruh, UserClass } from '../../db/models/User'
 import { MongoDocument, SubCommand } from '../../types'
 import { createEmbed } from '../../utils/createEmbed'
 
-const InvitesWigga: SubCommand = {
+const Invitesarchitecture: SubCommand = {
     type: ApplicationCommandOptionTypes.SUB_COMMAND,
     name: 'count',
     description: 'see how many invites someone or yourself has :)',
@@ -48,21 +48,13 @@ const InvitesWigga: SubCommand = {
     }
 }
 
-export default InvitesWigga
+export default Invitesarchitecture
 type IOverload = {
-    (
-        user: MongoDocument<UserClass>,
-        guildId: string,
-        prefix: string
-    ): Promise<string>
+    (user: MongoDocument<UserClass>, guildId: string, prefix: string): Promise<string>
     (usersId: string, guildId: string, prefix: string): Promise<string>
 }
 
-export const getInvitesFormated: IOverload = async (
-    userId: any,
-    guildId: string,
-    prefix: string
-) => {
+export const getInvitesFormated: IOverload = async (userId: any, guildId: string, prefix: string) => {
     if (typeof userId === 'string') {
         const user = await UserClass.getUser(userId, guildId)
         const { invites } = user.guilds[guildId]
@@ -73,8 +65,6 @@ export const getInvitesFormated: IOverload = async (
 }
 
 const formatInvites = (invites: InvitesBruh, prefix: string) =>
-    `${prefix} **${invites.joins - invites.leaves}** invites (**${
-        invites.joins
-    }** regular, **${invites.leaves}** left, **${invites.fake}** fake, **${
-        invites.bonus
-    }** bonus)`
+    `${prefix} **${invites.joins - invites.leaves}** invites (**${invites.joins}** regular, **${invites.leaves}** left, **${
+        invites.fake
+    }** fake, **${invites.bonus}** bonus)`

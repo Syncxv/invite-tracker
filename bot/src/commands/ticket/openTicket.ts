@@ -9,7 +9,7 @@ import { client } from '../..'
 export const openTicket: SubCommand = {
     type: ApplicationCommandOptionTypes.SUB_COMMAND,
     name: 'open',
-    description: 'open a new ticket wigga boy',
+    description: 'open a new ticket architecture boy',
     options: [
         {
             name: 'reason',
@@ -22,7 +22,7 @@ export const openTicket: SubCommand = {
         if (!interaction.guild) return await interaction.reply({ content: 'bruh is this even a server', ephemeral: true })
         const guild = await GuildClass.getGuild(interaction.guild.id)
         if (!guild.ticketCategoryId)
-            return await interaction.reply({ content: 'wigga boy do `/ticket setup-auto` first', ephemeral: true })
+            return await interaction.reply({ content: 'architecture boy do `/ticket setup-auto` first', ephemeral: true })
         const [reason] = getSubCommandOptions(interaction)
         const category = interaction.guild.channels.cache.get(guild.ticketCategoryId) as CategoryChannel
         const channel = await category.createChannel(`ticket ${guild.tickets.length + 1}`, {

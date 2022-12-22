@@ -2,8 +2,8 @@ import { Command } from '../../types'
 import { getSubCommands } from '../../utils/getSubCommands'
 import inviteIncrements from './inviteIncrement'
 import inviteLeaderBoards from './inviteLeaderboards'
-import invitesWigga from './invites'
-const options = [invitesWigga, inviteLeaderBoards, ...inviteIncrements]
+import invitesarchitecture from './invites'
+const options = [invitesarchitecture, inviteLeaderBoards, ...inviteIncrements]
 
 const subCommands = getSubCommands(options)
 

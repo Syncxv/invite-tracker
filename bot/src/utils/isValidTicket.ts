@@ -5,7 +5,7 @@ import { MongoDocument } from '../types'
 
 export const getTicket = async (interaction: ButtonInteraction<CacheType>): Promise<MongoDocument<TicketClass> | false> => {
     if (!interaction.guild) {
-        await interaction.reply({ content: 'bruh where tf is the guild wigga', ephemeral: true })
+        await interaction.reply({ content: 'bruh where tf is the guild architecture', ephemeral: true })
         return false
     }
 
