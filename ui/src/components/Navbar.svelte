@@ -48,6 +48,12 @@
 <style lang="scss">
     nav {
         padding: var(--spacing);
+        position: absolute;
+        z-index: 999;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        right: 0;
         .name {
           color: var(--h1-color);
         }

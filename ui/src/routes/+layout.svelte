@@ -8,6 +8,16 @@
 	import type { PageData } from "./$types";
     export let data: PageData
 </script>
+<div class="bruh">
+ 
+    <Navbar user={data.user} />
+    <slot />
+</div>
 
-<Navbar user={data.user} />
-<slot />
+
+<style lang="scss">
+    .bruh {
+        position: relative;
+        min-height: 100vh;
+    }
+</style>
