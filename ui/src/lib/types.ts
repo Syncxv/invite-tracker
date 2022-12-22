@@ -1,3 +1,4 @@
+import type { APIUser as apiUser } from 'discord-api-types/v10';
 export type DiscordAuthResponse =
 	| {
 			access_token: string;
@@ -18,3 +19,5 @@ export interface DiscordAuthData {
 	code: string;
 	redirect_uri: string;
 }
+
+export type APIUser = apiUser;

@@ -1,6 +1,7 @@
 <script lang="ts">
-  import {user} from '../stores/user'
-  
+	import type { APIUser } from 'discord-api-types/v10';
+	import type { PageData } from '../routes/$types';
+  export let data: PageData
 </script>
 
 <nav class="container">
@@ -8,9 +9,15 @@
     <ul>
       <li><strong>Invite Tracker</strong></li>
     </ul>
-    <ul>
+    <ul >
       <li><a href="/">Dashboard</a></li>
-      {#if $user == null}  <li><a href="/api/discord/auth" role="button">Login</a></li> {:else} <div>{$user.username}</div> {/if}
+      {#if data.user == null}  
+        <li data-sveltekit-preload-data="off">
+          <a href="/api/discord/auth" role="button">Login</a>
+        </li> 
+      {:else} 
+        <div>{data.user.username}</div> 
+      {/if}
     </ul>
   </nav>
 

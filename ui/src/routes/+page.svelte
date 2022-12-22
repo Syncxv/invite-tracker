@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
 import Navbar from "../components/Navbar.svelte";
-import {page} from '$app/stores'
+	import type { PageData } from "./$types";
+
+export let data: PageData
 </script>
 
 <svelte:head>
     <title>Hey there</title>
 </svelte:head>
 
-<Navbar />
+<Navbar data={data} />
 <main class="container">
-    <div>{$page.status}</div>
     <header>
         <div class="container">
             <h1 class="heading">Cool Bot</h1>

@@ -5,8 +5,10 @@ specifiers:
   '@playwright/test': ^1.29.0
   '@sveltejs/adapter-auto': next
   '@sveltejs/kit': next
+  '@types/cookie': ^0.5.1
   '@typescript-eslint/eslint-plugin': ^5.47.0
   '@typescript-eslint/parser': ^5.47.0
+  cookie: ^0.5.0
   discord-api-types: ^0.37.24
   eslint: ^8.30.0
   eslint-config-prettier: ^8.5.0
@@ -23,6 +25,8 @@ specifiers:
 
 dependencies:
   '@picocss/pico': 1.5.6
+  '@types/cookie': 0.5.1
+  cookie: 0.5.0
   discord-api-types: 0.37.24
   sass: 1.57.1
 
@@ -403,7 +407,6 @@ packages:
 
   /@types/cookie/0.5.1:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
-    dev: true
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
@@ -710,7 +713,6 @@ packages:
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
-    dev: true
 
   /cross-spawn/7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
