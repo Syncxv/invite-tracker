@@ -1,5 +1,4 @@
 import { BOT_API } from '.';
-import type { APIUser } from '../types';
 import type { Guild } from 'discord.js/typings';
 export const getServers = async (userId: string, accessToken: string): Promise<Guild[]> =>
 	await (

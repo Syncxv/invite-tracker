@@ -1,4 +1,5 @@
-export const DISCORD_API_URL = 'https://discord.com/api/v9';
+import { DISCORD_API_URL } from ".";
+
 export const req = async (path: string, props: RequestInit) => {
 	return await await fetch(`${DISCORD_API_URL}${path}`, { ...props });
 };

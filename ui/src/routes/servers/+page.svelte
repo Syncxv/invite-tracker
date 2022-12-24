@@ -20,7 +20,11 @@ export let data: PageData
                         {/if}
                     </div>
                     <h3>{guild.name}</h3>
-                    <a role="button" href={`/servers/${guild.id}`}>Manage Server</a>
+                    {#if guild.has_bot}
+                        <a role="button" href={`/servers/${guild.id}`}>Manage Server</a>
+                    {:else}
+                        <a class="invite" role="button" href="/">Invite Bot</a>
+                    {/if}
                 </div>
             </article>
             {/each}
@@ -32,10 +36,13 @@ export let data: PageData
 main {
     .container {
         padding: var(--spacing);
-        height: 100vh;
+        min-height: 100vh;
         align-items: center;
         justify-content: center;
         place-content: center;
+        .grid {
+            grid-template-columns: repeat(auto-fit, minmax(49%, 0.1fr))
+        }
 
         article {
             display: flex;
@@ -64,12 +71,18 @@ main {
                 }
                 h3 {
                     font-size: 1rem;
+                    max-width: 50%;
+                    justify-self: start;
+                    text-align: center
                 }
 
                 a {
                     width: fit-content;
                     justify-self: end;
                     padding: calc(var(--form-element-spacing-vertical) * 0.5) calc(var(--form-element-spacing-horizontal) * 0.5);
+                    .invite {
+                        background-color: var(--secondary)
+                    }
                 }
             }
         }
