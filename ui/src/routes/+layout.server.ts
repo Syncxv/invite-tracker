@@ -5,7 +5,7 @@ import type { APIUser } from '../lib/types';
 export const load: LayoutServerLoad = async ({ request, setHeaders }) => {
 	let user: APIUser | null = null;
 
-	const accessToken = parse(request.headers.get('cookie')!).access_token;
+	const accessToken = parse(request.headers.get('cookie') ?? '').access_token;
 
 	const req = await fetch(`${DISCORD_API_URL}/users/@me`, {
 		headers: { Authorization: `Bearer ${accessToken}` }
