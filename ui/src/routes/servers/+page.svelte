@@ -41,7 +41,8 @@ main {
         justify-content: center;
         place-content: center;
         .grid {
-            grid-template-columns: repeat(auto-fit, minmax(49%, 0.1fr))
+            place-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(22rem, 0.1fr))
         }
 
         article {
