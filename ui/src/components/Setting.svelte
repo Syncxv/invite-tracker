@@ -2,6 +2,7 @@
     export let id: string
     export let heading: string
     export let description: string
+    export let path: string
 </script>
 <article class="container">
     <div class="wrapper">
@@ -11,7 +12,7 @@
             <p>{description}</p>
         </div>
     </div>
-    <a role="button" href={`/servers/${id}/invites`}>Manage</a>
+    <a role="button" href={`/servers/${id}/${path}`}>Manage</a>
 </article>
 
 <style lang="scss">
@@ -20,7 +21,6 @@
             align-items: center;
             justify-content: space-between;
             padding: var(--spacing);
-            width: 35%;            
             .wrapper {
                 display: flex;
                 align-items: center;

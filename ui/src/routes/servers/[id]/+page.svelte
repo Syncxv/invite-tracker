@@ -7,7 +7,7 @@
 </script>
 <main>
     <div class="grid">
-        <Setting heading="Invite Setting" description="ALL things to do with invites :)))" id={data.id}></Setting>
+        <Setting path="invites" heading="Invite Setting" description="ALL things to do with invites :)))" id={data.id}></Setting>
     </div>
 </main>
 
