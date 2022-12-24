@@ -15,7 +15,7 @@ export let data: PageData
             <div class="container">
                 <h1 class="heading">Cool Bot</h1>
                 <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, reprehenderit.</p>
-                <p><a role="button" href={data.user == null ? "/api/discord/login" : "/servers"} class="cta-button">Dashboard</a></p>
+                <p><a role="button" href={data.user == null ? "/api/discord/auth" : "/servers"} class="cta-button">Dashboard</a></p>
             </div>
         </header>
     </main>

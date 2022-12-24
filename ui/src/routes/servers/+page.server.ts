@@ -15,7 +15,7 @@ export interface Server {
 
 export const load: PageServerLoad = async ({ parent, request }) => {
 	const { user } = await parent();
-	if (!user) throw redirect(300, '/');
+	if (!user) throw redirect(300, '/api/discord/auth');
 	const accessToken = getAccessToken(request);
 
 
