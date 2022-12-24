@@ -14,7 +14,7 @@ export let data: PageData
                 <div class="grid">
                     <div class="guild_icon">
                         {#if guild.icon == null}
-                            <h5>{guild.nameAcronym}</h5>
+                            <h5>{guild.accronym}</h5>
                         {:else}
                             <img src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}`} alt="">
                         {/if}
