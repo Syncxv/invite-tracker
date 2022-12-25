@@ -6,6 +6,16 @@ export interface CreateTicketOptions {
     ticketCategoryId?: string
     ticketText?: string
 }
+
+export class InviteSetting {
+    @prop({ default: 0 })
+    public maxAge: number
+}
+export class Settings {
+    @prop()
+    public inviteSettings: InviteSetting
+}
+
 export class GuildClass {
     @prop()
     public guildId: string
@@ -22,12 +32,15 @@ export class GuildClass {
     @prop({ ref: () => TicketClass })
     public tickets: Ref<TicketClass>[]
 
+    @prop()
+    public settings: Settings
+
     isSetUp() {
         return this.ticketCategoryId && this.ticketRoleIds.length >= 1 && this.ticketText
     }
 
     public static async createGuild(guildId: string, { ticketCategoryId, ticketText }: CreateTicketOptions) {
-        const guild = new GuildModel({ guildId, ticketCategoryId, ticketText })
+        const guild = new GuildModel({ guildId, ticketCategoryId, ticketText, settings: { inviteSettings: { maxAge: 0 } } })
         await guild.save()
         return guild
     }
