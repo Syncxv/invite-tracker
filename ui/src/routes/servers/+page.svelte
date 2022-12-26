@@ -25,7 +25,7 @@ export let data: PageData
                     {#if guild.has_bot}
                         <a role="button" href={`/servers/${guild.id}`}>Manage Server</a>
                     {:else}
-                        <a class="invite" role="button" href="/">Invite Bot</a>
+                        <a class="outline invite" role="button" href="/">Invite Bot</a>
                     {/if}
                 </div>
             </article>
